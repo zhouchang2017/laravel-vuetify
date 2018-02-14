@@ -13,7 +13,7 @@
 
 Route::get('{all}', function () {
     return view('index');
-})->where(['all' => '^(?!/storage.*)']);
+})->where(['all' => '.*']);
 
 Route::get('password/reset/{token}', function () {
     return view('index');

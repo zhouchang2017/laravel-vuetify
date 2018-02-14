@@ -10,11 +10,12 @@
                         required
                 ></v-text-field>
                 <img src="/storage/avatars/HJ5IpuHaK8hFyjPHjEiwoAZQQSISto1o8mHF6IBU.jpeg" alt="">
-                <upload-button
-                        accept="image/*"
-                        ref="fileInput"
-                        @input="getUploadedFile"
-                />
+                <!--<upload-button-->
+                        <!--accept="image/*"-->
+                        <!--ref="fileInput"-->
+                        <!--@input="getUploadedFile"-->
+                <!--/>-->
+                <upload :show-upload-list="false" :headers="{Authorization:`Bearer ${$store.getters.authToken}`}" type="drag" name="avatar" action="/api/fs/upload"></upload>
                 <quill-editor ref="myTextEditor"
                               v-model="content"
                               :options="editorOption"
@@ -41,11 +42,12 @@
 
   import { quillEditor } from 'vue-quill-editor'
   import UploadButton from '~/components/UploadButton'
+  import Upload from '~/components/upload/Upload'
 
   export default {
     name: 'post-edit',
     components: {
-      quillEditor, UploadButton
+      quillEditor, UploadButton,Upload
     },
     data () {
       return {

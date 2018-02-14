@@ -8,7 +8,7 @@ class FileSystemController extends Controller
 {
     public function upload(Request $request)
     {
-        $path = $request->file('avatar')->store('avatars');
+        $path = $request->file('avatar')->store('avatars','public');
 
         return '/storage/'.$path;
     }
