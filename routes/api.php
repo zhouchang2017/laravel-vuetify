@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('settings/profile', 'Settings\UpdateProfile');
     Route::patch('settings/password', 'Settings\UpdatePassword');
+
+    Route::post('fs/upload','FileSystemController@upload');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

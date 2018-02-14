@@ -1,36 +1,37 @@
 <template>
-  <v-form v-model="valid" ref="form" lazy-validation>
-    <v-card>
-      <v-card-text>
-        <v-text-field
-          label="文章标题"
-          v-model="title"
-          :rules="titleRules"
-          :counter="10"
-          required
-        ></v-text-field>
-        <v-cloudinary-upload
-          v-model="image"
-          upload-preset="cloudinary-preset-name"
-          cloud-name="cloudinary-cloud-name"
-        />
-        <quill-editor ref="myTextEditor"
-                      v-model="content"
-                      :options="editorOption"
-                      @blur="onEditorBlur($event)"
-                      @focus="onEditorFocus($event)"
-                      @ready="onEditorReady($event)">
-        </quill-editor>
-      </v-card-text>
-      <v-divider class="mt-5"></v-divider>
-      <v-card-actions>
-        <v-btn flat @click="resetForm">Clear</v-btn>
-        <v-spacer></v-spacer>
+    <v-form v-model="valid" ref="form" lazy-validation>
+        <v-card>
+            <v-card-text>
+                <v-text-field
+                        label="文章标题"
+                        v-model="title"
+                        :rules="titleRules"
+                        :counter="10"
+                        required
+                ></v-text-field>
+                <img src="/storage/avatars/HJ5IpuHaK8hFyjPHjEiwoAZQQSISto1o8mHF6IBU.jpeg" alt="">
+                <upload-button
+                        accept="image/*"
+                        ref="fileInput"
+                        @input="getUploadedFile"
+                />
+                <quill-editor ref="myTextEditor"
+                              v-model="content"
+                              :options="editorOption"
+                              @blur="onEditorBlur($event)"
+                              @focus="onEditorFocus($event)"
+                              @ready="onEditorReady($event)">
+                </quill-editor>
+            </v-card-text>
+            <v-divider class="mt-5"></v-divider>
+            <v-card-actions>
+                <v-btn flat @click="resetForm">Clear</v-btn>
+                <v-spacer></v-spacer>
 
-        <v-btn color="primary" :disabled="!valid" flat @click="submit">Submit</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-form>
+                <v-btn color="primary" :disabled="!valid" flat @click="submit">Submit</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-form>
 </template>
 
 <script>
@@ -39,18 +40,18 @@
   import 'quill/dist/quill.bubble.css'
 
   import { quillEditor } from 'vue-quill-editor'
-  import VCloudinaryUpload from 'vuetify-cloudinary-upload'
+  import UploadButton from '~/components/UploadButton'
 
   export default {
     name: 'post-edit',
     components: {
-      quillEditor,VCloudinaryUpload
+      quillEditor, UploadButton
     },
     data () {
       return {
         valid: true,
         title: '',
-        image:'',
+        image: '',
         titleRules: [
           (v) => !!v || 'Title is required',
           (v) => v && v.length <= 10 || 'Title must be less than 10 characters'
@@ -80,7 +81,19 @@
       }
     },
     methods: {
-
+      async getUploadedFile (e) {
+        console.log(e)
+        let formData = new FormData()
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        formData.append('avatar', e)
+        let res = await this.$store.dispatch('uploadImage', formData, config)
+        console.log(res)
+        // this.image = e
+      },
       submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
@@ -123,8 +136,8 @@
 </script>
 
 <style scoped>
-  .quill-editor {
-    height: 500px;
-    margin-bottom: 20px;
-  }
+    .quill-editor {
+        height: 500px;
+        margin-bottom: 20px;
+    }
 </style>

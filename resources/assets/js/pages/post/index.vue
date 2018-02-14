@@ -44,7 +44,7 @@
     name: 'index',
     data () {
       return {
-        name: this.$t('文章列表'),
+        name: this.$t('article_list'),
         headers: [
           {
             text: 'Dessert (100g serving)',

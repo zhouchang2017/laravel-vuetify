@@ -4,11 +4,11 @@ const mix = require('laravel-mix')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 mix
-  .js('resources/assets/js/app.js', 'public/js')
-  .stylus('resources/assets/stylus/app.styl', 'public/css')
-  .sourceMaps()
-  .disableNotifications()
-  .copyDirectory('resources/assets/img', 'public/img')
+.js('resources/assets/js/app.js', 'public/js')
+.stylus('resources/assets/stylus/app.styl', 'public/css')
+.sourceMaps()
+.disableNotifications()
+.copyDirectory('resources/assets/img', 'public/img')
 
 if (mix.inProduction()) {
   mix.version()
@@ -27,10 +27,14 @@ if (mix.inProduction()) {
     'vuex-router-sync'
   ])
 }
+mix.setPublicPath('public/')
 
 mix.webpackConfig({
-  plugins: [
-  ],
+  output: {
+    chunkFilename: 'js/[id].[chunkhash].js',
+    publicPath: '/'
+  },
+  plugins: [],
   resolve: {
     alias: {
       '~': path.join(__dirname, './resources/assets/js')

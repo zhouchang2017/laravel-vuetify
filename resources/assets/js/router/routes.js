@@ -1,26 +1,27 @@
 export default ({authGuard, guestGuard}) => [
-  {path: '/', name: 'welcome', component: require('~/pages/welcome.vue')},
+  {path: '/', name: 'welcome', component: ()=>import('~/pages/welcome.vue')},
 
   // Authenticated routes.
   ...authGuard([
     {
       path: '/home',
       name: 'home',
-      component: require('~/pages/home.vue')
+      component: ()=>import('~/pages/home.vue')
     },
     {
       path: '/post',
       name: 'post.index',
-      component: require('~/pages/post/index')
+      // component: require('~/pages/post/index')
+      component: ()=>import('~/pages/post/index')
     },
     {
       path: '/post/create',
       name: 'post.create',
-      component: require('~/pages/post/create')
+      component: ()=>import('~/pages/post/create')
     },
     {
       path: '/settings',
-      component: require('~/pages/settings/index.vue'),
+      component: ()=>import('~/pages/settings/index.vue'),
       children: [
         {
           path: '',
@@ -29,12 +30,12 @@ export default ({authGuard, guestGuard}) => [
         {
           path: 'profile',
           name: 'settings.profile',
-          component: require('~/pages/settings/profile.vue')
+          component: ()=>import('~/pages/settings/profile.vue')
         },
         {
           path: 'password',
           name: 'settings.password',
-          component: require('~/pages/settings/password.vue')
+          component: ()=>import('~/pages/settings/password.vue')
         }
       ]
     }
@@ -45,24 +46,24 @@ export default ({authGuard, guestGuard}) => [
     {
       path: '/login',
       name: 'login',
-      component: require('~/pages/auth/login.vue')
+      component: ()=>import('~/pages/auth/login.vue')
     },
     {
       path: '/register',
       name: 'register',
-      component: require('~/pages/auth/register.vue')
+      component: ()=>import('~/pages/auth/register.vue')
     },
     {
       path: '/password/reset',
       name: 'password.request',
-      component: require('~/pages/auth/password/email.vue')
+      component: ()=>import('~/pages/auth/password/email.vue')
     },
     {
       path: '/password/reset/:token',
       name: 'password.reset',
-      component: require('~/pages/auth/password/reset.vue')
+      component: ()=>import('~/pages/auth/password/reset.vue')
     }
   ]),
 
-  {path: '*', component: require('~/pages/errors/404.vue')}
+  {path: '*', component: ()=>import('~/pages/errors/404.vue')}
 ]

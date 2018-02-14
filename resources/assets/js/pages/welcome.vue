@@ -1,16 +1,15 @@
 <template>
   <div>
-    <v-toolbar>
-      <v-spacer></v-spacer>
-      <!-- <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon> -->
-      <v-toolbar-items>
-        <v-btn flat v-if="authenticated" :to="{ name: 'home' }">{{ $t('home') }}</v-btn>
-        <template v-else>
-          <v-btn flat :to="{ name: 'login' }">{{ $t('login') }}</v-btn>
-          <v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>
-        </template>
-      </v-toolbar-items>
-    </v-toolbar>
+    <!--<v-toolbar>-->
+      <!--<v-spacer></v-spacer>-->
+      <!--<v-toolbar-items>-->
+        <!--<v-btn flat v-if="authenticated" :to="{ name: 'home' }">{{ $t('home') }}</v-btn>-->
+        <!--<template v-else>-->
+          <!--<v-btn flat :to="{ name: 'login' }">{{ $t('login') }}</v-btn>-->
+          <!--<v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>-->
+        <!--</template>-->
+      <!--</v-toolbar-items>-->
+    <!--</v-toolbar>-->
     <main>
       <v-content>
         <v-container fluid>

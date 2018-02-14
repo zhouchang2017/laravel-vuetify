@@ -2,7 +2,8 @@
     "plugins": [
         "transform-runtime",
         "transform-async-to-generator",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "syntax-dynamic-import"
     ],
     "presets": [
         ["env",  {"modules": false}],

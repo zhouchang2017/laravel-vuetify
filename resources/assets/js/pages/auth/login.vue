@@ -1,4 +1,4 @@
-<template>
+ <template>
   <v-layout row>
     <v-flex xs12 sm8 offset-sm2 lg4 offset-lg4>
       <v-card>

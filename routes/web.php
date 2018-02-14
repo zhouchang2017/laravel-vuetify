@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('{path}', function () {
+Route::get('{all}', function () {
     return view('index');
-})->where('path', '(.*)');
+})->where(['all' => '^(?!/storage.*)']);
 
 Route::get('password/reset/{token}', function () {
     return view('index');

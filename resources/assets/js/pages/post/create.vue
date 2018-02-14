@@ -4,7 +4,7 @@
       <v-list>
         <v-list-tile>
           <v-list-tile-title class="title">
-            文章发布
+            {{ name }}
           </v-list-tile-title>
         </v-list-tile>
       </v-list>
@@ -19,7 +19,9 @@
   export default {
     name: 'create',
     data () {
-      return {}
+      return {
+        name: this.$t('article_create'),
+      }
     },
     components:{
       PostEdit
