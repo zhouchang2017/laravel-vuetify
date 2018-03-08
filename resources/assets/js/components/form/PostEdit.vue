@@ -9,12 +9,13 @@
                         :counter="10"
                         required
                 ></v-text-field>
-                <!--<upload-button-->
-                        <!--accept="image/*"-->
-                        <!--ref="fileInput"-->
-                        <!--@input="getUploadedFile"-->
-                <!--/>-->
-                <upload  :headers="{Authorization:`Bearer ${$store.getters.authToken}`}" type="drag" name="avatar" action="/api/fs/upload"></upload>
+                <upload-button
+                        class="mx-0"
+                        accept="image/*"
+                        ref="fileInput"
+                        @getPath="getPath"
+                />
+                <!--<upload  :headers="{Authorization:`Bearer ${$store.getters.authToken}`}" type="drag" name="avatar" action="/api/fs/upload"></upload>-->
                 <quill-editor ref="myTextEditor"
                               v-model="content"
                               :options="editorOption"
@@ -82,18 +83,8 @@
       }
     },
     methods: {
-      async getUploadedFile (e) {
-        console.log(e)
-        let formData = new FormData()
-        let config = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-        formData.append('avatar', e)
-        let res = await this.$store.dispatch('uploadImage', formData, config)
-        console.log(res)
-        // this.image = e
+      getPath(src){
+        console.log(src)
       },
       submit () {
         if (this.$refs.form.validate()) {

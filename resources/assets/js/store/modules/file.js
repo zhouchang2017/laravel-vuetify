@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const actions = {
-  uploadImage (ctx, file) {
-    return axios.post('/api/fs/upload', file)
+  uploadImage (ctx, {formData, config}) {
+    return axios.post('/api/fs/upload', formData, config)
   }
 }

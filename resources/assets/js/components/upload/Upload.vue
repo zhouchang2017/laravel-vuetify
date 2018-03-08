@@ -14,9 +14,9 @@
                     :multiple="multiple"
                     :accept="accept">
             <slot>
-              <!--<v-card>-->
+              <v-card>
                 <!--<progress-bar v-model=""></progress-bar>-->
-              <!--</v-card>-->
+              </v-card>
             </slot>
         </div>
         <slot name="tip"></slot>
@@ -163,8 +163,9 @@
         if (!files) {
           return
         }
-        this.uploadFiles(files)
-        this.$refs.input.value = null
+        console.log(e)
+        // this.uploadFiles(files)
+        // this.$refs.input.value = null
       },
       onDrop (e) {
         this.dragOver = false
