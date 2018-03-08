@@ -1,22 +1,23 @@
 <template>
-    <ul :class="[prefixCls + '-list']">
-        <li v-for="file in files"
-            :class="fileCls(file)"
-            @click="handleClick(file)">
-            <v-btn @click="handlePreview(file)" flat icon color="pink">
-                <v-icon dark>perm_media</v-icon>
-                {{ file.name }}
-            </v-btn>
-            <v-btn v-show="file.status === 'finished'" @click.native="handleRemove(file)" flat icon color="pink">
-                <v-icon>delete
-                </v-icon>
-            </v-btn>
-            <!--<transition name="fade">-->
-            <v-progress-linear v-if="file.showProgress"
-                               v-model="file.percentage"></v-progress-linear>
-            <!--</transition>-->
-        </li>
-    </ul>
+  <v-list two-line subheader>
+    <!--<v-subheader inset>Folders</v-subheader>-->
+    <v-list-tile v-for="(file, index) in files" :key="file.name" avatar  @click="">
+      <v-list-tile-content>
+        <v-list-tile-title>{{ file.name }}</v-list-tile-title>
+        <v-list-tile-sub-title>
+          <v-progress-linear v-if="file.showProgress"
+                             v-model="file.percentage"></v-progress-linear>
+        </v-list-tile-sub-title>
+      </v-list-tile-content>
+      <v-list-tile-action>
+        <v-btn v-show="file.status === 'finished'" @click.native="handleRemove(file)" flat icon color="pink">
+          <v-icon>delete
+          </v-icon>
+        </v-btn>
+      </v-list-tile-action>
+    </v-list-tile>
+    <v-divider inset></v-divider>
+  </v-list>
 </template>
 <script>
   const prefixCls = 'ivu-upload'

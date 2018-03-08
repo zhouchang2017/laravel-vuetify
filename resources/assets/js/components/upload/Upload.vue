@@ -1,5 +1,5 @@
 <template>
-    <div :class="[prefixCls]">
+  <v-flex xs12 sm12 lg12>
         <div
                 :class="classes"
                 @click="handleClick"
@@ -14,9 +14,9 @@
                     :multiple="multiple"
                     :accept="accept">
             <slot>
-                <v-flex  style="width: 58px;height:58px;line-height: 58px;">
-                    <v-icon>add_a_photo</v-icon>
-                </v-flex>
+              <!--<v-card>-->
+                <!--<progress-bar v-model=""></progress-bar>-->
+              <!--</v-card>-->
             </slot>
         </div>
         <slot name="tip"></slot>
@@ -25,7 +25,7 @@
                 :files="fileList"
                 @on-file-remove="handleRemove"
                 @on-file-preview="handlePreview"></upload-list>
-    </div>
+  </v-flex>
 </template>
 <script>
   import UploadList from '~/components/upload/UploadList'
@@ -311,3 +311,9 @@
     },
   }
 </script>
+
+<style>
+  input[type=file] {
+    display: none;
+  }
+</style>

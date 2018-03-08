@@ -9,13 +9,12 @@
                         :counter="10"
                         required
                 ></v-text-field>
-                <img src="/storage/avatars/HJ5IpuHaK8hFyjPHjEiwoAZQQSISto1o8mHF6IBU.jpeg" alt="">
                 <!--<upload-button-->
                         <!--accept="image/*"-->
                         <!--ref="fileInput"-->
                         <!--@input="getUploadedFile"-->
                 <!--/>-->
-                <upload :show-upload-list="false" :headers="{Authorization:`Bearer ${$store.getters.authToken}`}" type="drag" name="avatar" action="/api/fs/upload"></upload>
+                <upload  :headers="{Authorization:`Bearer ${$store.getters.authToken}`}" type="drag" name="avatar" action="/api/fs/upload"></upload>
                 <quill-editor ref="myTextEditor"
                               v-model="content"
                               :options="editorOption"
