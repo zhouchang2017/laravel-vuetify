@@ -24,7 +24,7 @@ export const actions = {
   responseMessage ({ commit, state }, payload) {
     commit(types.RESPONSE_MSG, payload)
     if (!state.modal) {
-      setTimeout(() => { commit(types.CLEAR_MSG) }, 6500)
+      setTimeout(() => { commit(types.CLEAR_MSG) }, 2500)
     }
   },
   clearMessage ({ commit }) {
