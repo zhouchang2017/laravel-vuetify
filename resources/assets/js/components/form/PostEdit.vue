@@ -10,6 +10,7 @@
                         required
                 ></v-text-field>
 
+
                 <upload-button
                         class="mx-0"
                         accept="image/*"
@@ -212,9 +213,17 @@
   }
 </script>
 
-<style scoped>
+<style>
     .quill-editor {
         height: 500px;
         margin-bottom: 20px;
+    }
+    input[type=file] {
+        position: absolute;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer
     }
 </style>

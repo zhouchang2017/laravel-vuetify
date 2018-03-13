@@ -13,6 +13,7 @@ const modules = requireContext.keys()
   )
   .reduce((modules, [name, module]) => {
     modules[name] = module
+    modules[name].namespaced = true
     return modules
   }, {})
 

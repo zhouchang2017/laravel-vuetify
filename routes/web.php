@@ -11,9 +11,10 @@
 |
 */
 
+
 Route::get('{all}', function () {
     return view('index');
-})->where(['all' => '.*']);
+})->where(['all' => '^(?!api).*']);
 
 Route::get('password/reset/{token}', function () {
     return view('index');

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
@@ -24,7 +25,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\UpdatePassword');
 
     Route::post('fs/upload','FileSystemController@upload');
+
+    Route::get('catelogs','CatelogController@index');
+
+
 });
+
+
 
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');

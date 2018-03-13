@@ -127,7 +127,7 @@
         this.imageUrl = ''
         this.progress = 0
         this.dialog = false
-        this.$store.dispatch('responseMessage',{text:this.$t('remove_img_success')})
+        this.$store.dispatch('message.responseMessage',{text:this.$t('remove_img_success')})
       },
 
       async upload (e) {
@@ -144,7 +144,7 @@
         formData.append('avatar', e)
         try {
           this.loading = true
-          let {data} = await this.$store.dispatch('uploadImage', {formData, config})
+          let {data} = await this.$store.dispatch('file/uploadImage', {formData, config})
           return data
         } catch (err) {
           console.error(err.response)
