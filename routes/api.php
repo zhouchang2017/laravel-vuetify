@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('catelogs','CatelogController@index');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
@@ -26,7 +27,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('fs/upload','FileSystemController@upload');
 
-    Route::get('catelogs','CatelogController@index');
 
 
 });
