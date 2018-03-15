@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Post as PostResource;
 
 class PostController extends Controller
 {
@@ -18,6 +19,10 @@ class PostController extends Controller
     public function __construct(Post $post)
     {
         $this->post = $post;
+    }
+
+    public function index(){
+        return PostResource::collection(Post::paginate(15));
     }
 
     public function store(StorePostRequest $request)
