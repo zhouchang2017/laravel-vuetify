@@ -4,6 +4,8 @@ $config = [
     'appName' => config('app.name'),
     'locale' => $locale = app()->getLocale(),
     'translations' => json_decode(file_get_contents(resource_path("lang/{$locale}.json")), true),
+    'appUrl' => getenv('APP_URL'),
+    'apiPrefix' => getenv('APP_PREFIX')
 ];
 @endphp
 <script>window.config = {!! json_encode($config); !!};</script>

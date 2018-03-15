@@ -20,15 +20,15 @@
 
                 <v-select
                         label="服务器"
-                        :items="nuxtServicies"
+                        :items="nuxts"
                         item-text="name"
                         item-value="id"
-                        v-model="nuxts"
+                        v-model="selectedNuxts"
                         multiple
                         max-height="400"
                         hint="选择需要展现的服务器"
                         persistent-hint
-                        :rules="nuxtsRules"
+                        :rules="selectedNuxtsRules"
                         chips
                         required
                         :loading="nuxtBusy"
@@ -48,16 +48,30 @@
 
                 <v-select
                         label="文章类型"
-                        :items="states"
-                        v-model="catelogs"
+                        :items="catelogs"
+                        item-text="name"
+                        item-value="id"
+                        v-model="selectedCatelogs"
                         multiple
                         max-height="400"
                         hint="请选择文章类型"
                         persistent-hint
-                        :rules="catelogsRules"
+                        :rules="selectedCatelogsRules"
                         chips
                         required
-                ></v-select>
+                >
+                    <template slot="selection" slot-scope="data">
+                        <v-chip
+                                close
+                                @input="data.parent.selectItem(data.item)"
+                                :selected="data.selected"
+                                class="chip--select-multi"
+                                :key="JSON.stringify(data.item)"
+                        >
+                            {{ data.item.name }}
+                        </v-chip>
+                    </template>
+                </v-select>
                 <quill-editor ref="myTextEditor"
                               v-model="content"
                               :options="editorOption"
@@ -96,17 +110,17 @@
         nuxtBusy: false,
         valid: true,
         title: '',
-        image: '',
-        nuxts: [],
-        catelogs: [],
+        avatar: '',
+        selectedNuxts: [],
+        selectedCatelogs: [],
         titleRules: [
           (v) => !!v || 'Title is required',
           (v) => v && v.length <= 64 || 'Title must be less than 64 characters'
         ],
-        nuxtsRules: [
+        selectedNuxtsRules: [
           (v) => v.length > 0 || 'Service is required'
         ],
-        catelogsRules: [
+        selectedCatelogsRules: [
           (v) => v.length > 0 || 'Catelogs is required'
         ],
         content: '',
@@ -131,53 +145,28 @@
             ]
           }
         },
-        states: [
-          'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-          'Arkansas', 'California', 'Colorado', 'Connecticut',
-          'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-          'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-          'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-          'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-          'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-          'Missouri', 'Montana', 'Nebraska', 'Nevada',
-          'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-          'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-          'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-          'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-          'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-          'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ],
-        nuxtServicies: [
-          {name: 'nuxt-1', id: 1},
-          {name: 'nuxt-2', id: 2},
-          {name: 'nuxt-3', id: 3},
-          {name: 'nuxt-4', id: 4},
-          {name: 'nuxt-5', id: 5},
-          {name: 'nuxt-6', id: 6},
-          {name: 'nuxt-7', id: 7},
-        ]
+        catelogs: [],
+        nuxts: []
       }
     },
     methods: {
+      fetchCatelogs () {
+        return this.$store.dispatch('catelog/get')
+      },
+      fetchNuxts () {
+        return this.$store.dispatch('nuxt/get')
+      },
       nuxtSelect ({parent, item}) {
-        console.log(parent)
-        console.log(item)
-        this.nuxtBusy = true
-        // Todo... 异步删除
-        setTimeout(() => {
-          parent.selectItem(item)
-          this.nuxtBusy = false
-        }, 2000)
+        parent.selectItem(item)
       },
       getPath (src) {
-        this.image = src
+        this.avatar = src
       },
-      submit () {
+      async submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          axios.post('/api/submit', {
-            name: this.name
-          })
+          let data = await this.$store.dispatch('post/store',{formDate:this.formDate})
+          console.log(data)
         }
       },
       resetForm () {
@@ -199,9 +188,13 @@
       editor () {
         return this.$refs.myTextEditor.quill
       },
-      form () {
+      formDate () {
         return {
-          title: this.title
+          title: this.title,
+          avatar: this.avatar,
+          nuxts: this.selectedNuxts,
+          catelogs: this.selectedCatelogs,
+          body: this.content
         }
       }
     },
@@ -209,6 +202,10 @@
       name () {
         this.errorMessages = []
       }
+    },
+    async created () {
+      this.catelogs = await this.fetchCatelogs()
+      this.nuxts = await this.fetchNuxts()
     }
   }
 </script>
@@ -218,6 +215,7 @@
         height: 500px;
         margin-bottom: 20px;
     }
+
     input[type=file] {
         position: absolute;
         right: 0;

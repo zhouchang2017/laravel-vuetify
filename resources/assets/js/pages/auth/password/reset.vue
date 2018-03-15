@@ -92,7 +92,7 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('fetchUser')
 
-      this.$store.dispatch('responseMessage', {
+      this.$store.dispatch('message/responseMessage', {
         type: 'success',
         text: response.data.status
       })

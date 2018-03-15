@@ -39,7 +39,7 @@ export default {
     busy: false
   }),
 
-  computed: mapGetters({
+  computed: mapGetters('auth',{
     user: 'authUser',
     authenticated: 'authCheck'
   }),

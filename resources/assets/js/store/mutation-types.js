@@ -9,3 +9,9 @@ export const UPDATE_USER = 'UPDATE_USER'
 // feedback.js
 export const RESPONSE_MSG = 'RESPONSE_MSG'
 export const CLEAR_MSG = 'CLEAR_MSG'
+
+// catelog.js
+export const SAVE_CATELOG = 'SAVE_CATELOG'
+
+// nuxt.js
+export const SAVE_NUXT = 'SAVE_NUXT'

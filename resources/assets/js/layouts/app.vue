@@ -37,7 +37,7 @@ export default {
     'page-footer': PageFooter
   },
 
-  computed: mapGetters({
+  computed: mapGetters('auth',{
     authenticated: 'authCheck'
   }),
 

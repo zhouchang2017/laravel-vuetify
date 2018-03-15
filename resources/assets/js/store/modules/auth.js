@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
+import api from '~/config/api'
 
 // state
 export const state = {
@@ -44,7 +45,7 @@ export const actions = {
 
   async fetchUser ({ commit }) {
     try {
-      const { data } = await axios.get('/api/user')
+      const { data } = await axios.get(api.user.me())
 
       commit(types.FETCH_USER_SUCCESS, { user: data })
     } catch (e) {
@@ -58,7 +59,7 @@ export const actions = {
 
   async logout ({ commit }) {
     try {
-      await axios.post('/api/logout')
+      await axios.post(api.auth.logout())
     } catch (e) { }
 
     commit(types.LOGOUT)

@@ -1,7 +1,8 @@
 import axios from 'axios'
+import api from '~/config/api'
 
 export const actions = {
   uploadImage (ctx, {formData, config}) {
-    return axios.post('/api/fs/upload', formData, config)
+    return axios.post(api.file.store(), formData, config)
   }
 }

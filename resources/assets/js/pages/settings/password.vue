@@ -63,7 +63,7 @@ export default {
       this.form.reset()
       this.$emit('busy', false)
 
-      this.$store.dispatch('responseMessage', {
+      this.$store.dispatch('message/responseMessage', {
         type: 'success',
         text: this.$t('password_updated')
       })

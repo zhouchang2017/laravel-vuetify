@@ -22,12 +22,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'feedback-message',
-  computed: mapGetters([
+  computed: mapGetters('message',[
     'responseMessage'
   ]),
   methods: {
     close () {
-      this.$store.dispatch('clearMessage')
+      this.$store.dispatch('message/clearMessage')
     }
   }
 }

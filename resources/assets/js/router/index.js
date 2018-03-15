@@ -31,9 +31,9 @@ function make (routes) {
 
   // Register before guard.
   router.beforeEach(async (to, from, next) => {
-    if (!store.getters.authCheck && store.getters.authToken) {
+    if (!store.getters['auth/authCheck'] && store.getters['auth/authToken']) {
       try {
-        await store.dispatch('fetchUser')
+        await store.dispatch('auth/fetchUser')
       } catch (e) { }
     }
 
@@ -82,7 +82,7 @@ function setLayout (router, to) {
  */
 function authGuard (routes) {
   return beforeEnter(routes, (to, from, next) => {
-    if (!store.getters.authCheck) {
+    if (!store.getters['auth/authCheck']) {
       next({
         name: 'login',
         query: { redirect: to.fullPath }
@@ -101,7 +101,7 @@ function authGuard (routes) {
  */
 function guestGuard (routes) {
   return beforeEnter(routes, (to, from, next) => {
-    if (store.getters.authCheck) {
+    if (store.getters['auth/authCheck']) {
       next({ name: 'home' })
     } else {
       next()

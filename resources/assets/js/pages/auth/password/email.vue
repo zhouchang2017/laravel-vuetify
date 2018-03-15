@@ -51,7 +51,7 @@ export default {
 
       const { data } = await this.form.post('/api/password/email')
 
-      this.$store.dispatch('responseMessage', {
+      this.$store.dispatch('message/responseMessage', {
         type: 'success',
         text: data.status
       })

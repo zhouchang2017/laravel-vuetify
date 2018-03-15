@@ -70,7 +70,7 @@ export default {
       await this.$store.dispatch('updateUser', { user: data })
       this.$emit('busy', false)
 
-      this.$store.dispatch('responseMessage', {
+      this.$store.dispatch('message/responseMessage', {
         type: 'success',
         text: this.$t('info_updated')
       })
