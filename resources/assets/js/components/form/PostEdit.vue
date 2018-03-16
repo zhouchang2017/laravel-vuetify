@@ -108,8 +108,8 @@
     },
     data () {
       return {
-        uploadProgress:0,
-        uploadProgressShow:false,
+        uploadProgress: 0,
+        uploadProgressShow: false,
         query: false,
         toggle_multiple: [],
         nuxtBusy: false,
@@ -156,7 +156,6 @@
         let formData = new FormData()
         formData.append('avatar', file)
 
-
         let {data} = await this.$store.dispatch('file/uploadImage', {formData, config})
         Editor.insertEmbed(cursorLocation, 'image', data)
         resetUploader()
@@ -177,8 +176,8 @@
       async submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          let data = await this.$store.dispatch('post/store', {formDate: this.formDate})
-          console.log(data)
+          await this.$store.dispatch('post/store', {formDate: this.formDate})
+          this.$router.replace({name: 'post.index'})
         }
       },
       resetForm () {

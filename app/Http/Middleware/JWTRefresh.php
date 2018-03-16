@@ -1,6 +1,6 @@
 <?php
 
-namespace Unisharp\JWT\Http\Middleware;
+namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -17,15 +17,8 @@ class JWTRefresh
     {
         //
     }
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     *
-     * @return mixed
-     */
-    public function handle($request, \Closure $next)
+
+    public function handle($request, Closure $next)
     {
         $token = $this->authenticate($request);
         $response = $next($request);

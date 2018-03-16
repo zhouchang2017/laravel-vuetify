@@ -14,11 +14,6 @@ class Post extends Resource
      */
     public function toArray($request)
     {
-        return [
-            'id'   => $this->id,
-            'title' => $this->title,
-            'avatar' => $this->avatar,
-            'originate' => $this->originate,
-        ];
+        return parent::toArray($request);
     }
 }

@@ -14,17 +14,17 @@ use Illuminate\Http\Request;
 */
 
 Route::get('catelogs','CatelogController@index');
-Route::get('posts','PostController@index');
 Route::get('nuxts','NuxtController@index');
 Route::resource('comment','CommentsController');
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => ['auth:api','refresh']], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    Route::post('post/store','PostController@store');
+    Route::resource('post','PostController');
+
 
     Route::patch('settings/profile', 'Settings\UpdateProfile');
     Route::patch('settings/password', 'Settings\UpdatePassword');

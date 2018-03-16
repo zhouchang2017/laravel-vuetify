@@ -1,22 +1,24 @@
 const api = {
   catelog: {
-    get: () => `catelogs`
+    get: () => 'catelogs'
   },
   nuxt: {
-    get: () => `nuxts`
+    get: () => 'nuxts'
   },
   file: {
-    store: () => `fs/upload`
+    store: () => 'fs/upload'
   },
   auth: {
-    login: () => `login`,
+    login: () => 'login',
     logout: () => 'logout'
   },
   user: {
     me: () => 'user'
   },
   post: {
-    store: () => 'post/store'
+    index: () => 'post',
+    store: () => 'post/store',
+    update: id => `post/${id}`
   }
 }
 
