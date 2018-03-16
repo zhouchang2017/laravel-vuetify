@@ -72,13 +72,18 @@
                         </v-chip>
                     </template>
                 </v-select>
-                <quill-editor ref="myTextEditor"
-                              v-model="content"
-                              :options="editorOption"
-                              @blur="onEditorBlur($event)"
-                              @focus="onEditorFocus($event)"
-                              @ready="onEditorReady($event)">
-                </quill-editor>
+
+                <v-progress-linear
+                        :indeterminate="query"
+                        :query="true"
+                        v-model="uploadProgress"
+                        :active="uploadProgressShow"
+                ></v-progress-linear>
+                <vue-editor id="editor"
+                            useCustomImageHandler
+                            @imageAdded="handleImageAdded" v-model="content">
+                </vue-editor>
+
             </v-card-text>
             <v-divider class="mt-5"></v-divider>
             <v-card-actions>
@@ -92,21 +97,21 @@
 </template>
 
 <script>
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
-
-  import { quillEditor } from 'vue-quill-editor'
+  import { VueEditor } from 'vue2-editor'
   import UploadButton from '~/components/UploadButton'
   import Upload from '~/components/upload/Upload'
 
   export default {
     name: 'post-edit',
     components: {
-      quillEditor, UploadButton, Upload
+      UploadButton, Upload, VueEditor
     },
     data () {
       return {
+        uploadProgress:0,
+        uploadProgressShow:false,
+        query: false,
+        toggle_multiple: [],
         nuxtBusy: false,
         valid: true,
         title: '',
@@ -124,32 +129,39 @@
           (v) => v.length > 0 || 'Catelogs is required'
         ],
         content: '',
-        // formHasErrors: false,
-        editorOption: {
-          modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{'header': 1}, {'header': 2}],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'script': 'sub'}, {'script': 'super'}],
-              [{'indent': '-1'}, {'indent': '+1'}],
-              [{'direction': 'rtl'}],
-              [{'size': ['small', false, 'large', 'huge']}],
-              [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              [{'font': []}],
-              [{'color': []}, {'background': []}],
-              [{'align': []}],
-              ['clean'],
-              ['link', 'image', 'video']
-            ]
-          }
-        },
+
         catelogs: [],
         nuxts: []
       }
     },
     methods: {
+      async handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+        this.query = true
+        this.uploadProgressShow = true
+        this.uploadProgress = 0
+        this.query = false
+
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          onUploadProgress: progressEvent => {
+            this.uploadProgress = Math.round((
+              progressEvent.loaded * 100) / progressEvent.total)
+            if (this.uploadProgress >= 100) {
+              this.uploadProgressShow = false
+            }
+          }
+        }
+        let formData = new FormData()
+        formData.append('avatar', file)
+
+
+        let {data} = await this.$store.dispatch('file/uploadImage', {formData, config})
+        Editor.insertEmbed(cursorLocation, 'image', data)
+        resetUploader()
+
+      },
       fetchCatelogs () {
         return this.$store.dispatch('catelog/get')
       },
@@ -165,7 +177,7 @@
       async submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          let data = await this.$store.dispatch('post/store',{formDate:this.formDate})
+          let data = await this.$store.dispatch('post/store', {formDate: this.formDate})
           console.log(data)
         }
       },
@@ -173,21 +185,9 @@
         this.errorMessages = []
         this.formHasErrors = false
         this.$refs.form.reset()
-      },
-      onEditorBlur (editor) {
-        console.log('editor blur!', editor)
-      },
-      onEditorFocus (editor) {
-        console.log('editor focus!', editor)
-      },
-      onEditorReady (editor) {
-        console.log('editor ready!', editor)
       }
     },
     computed: {
-      editor () {
-        return this.$refs.myTextEditor.quill
-      },
       formDate () {
         return {
           title: this.title,

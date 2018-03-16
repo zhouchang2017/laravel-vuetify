@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
          $this->call(CatelogTableSeeder::class);
          $this->call(NuxtsTableSeeder::class);
          $this->call(PostsTableSeeder::class);
+         $this->call(CommentsTableSeeder::class);
     }
 }

@@ -127,7 +127,7 @@
         this.imageUrl = ''
         this.progress = 0
         this.dialog = false
-        this.$store.dispatch('message.responseMessage',{text:this.$t('remove_img_success')})
+        this.$store.dispatch('message/responseMessage', {text: this.$t('remove_img_success')})
       },
 
       async upload (e) {
@@ -137,20 +137,17 @@
             'Content-Type': 'multipart/form-data'
           },
           onUploadProgress: progressEvent => {
-            this.progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            this.progress = Math.round((
+              progressEvent.loaded * 100) / progressEvent.total)
             if (this.progress >= 100) this.loading = false
           }
         }
         formData.append('avatar', e)
-        try {
-          this.loading = true
-          let {data} = await this.$store.dispatch('file/uploadImage', {formData, config})
-          return data
-        } catch (err) {
-          console.error(err.response)
-        }
-        // this.image = e
-      },
+        this.loading = true
+        let {data} = await this.$store.dispatch('file/uploadImage', {formData, config})
+        this.loading = false
+        return data
+      }
     }
   }
 </script>

@@ -89,16 +89,16 @@ export default {
       if (await this.formHasErrors()) return
 
       // Register the user.
-      const { data } = await this.form.post('/api/register')
+      const { data } = await this.form.post('register')
 
       // Log in the user.
-      const { data: { token }} = await this.form.post('/api/login')
+      const { data: { token }} = await this.form.post('login')
 
       // Save the token.
-      this.$store.dispatch('saveToken', { token })
+      this.$store.dispatch('auth/saveToken', { token })
 
       // Update the user.
-      await this.$store.dispatch('updateUser', { user: data })
+      await this.$store.dispatch('auth/updateUser', { user: data })
 
       // Redirect home.
       this.$router.push({ name: 'home' })

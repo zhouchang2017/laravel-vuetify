@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::get('catelogs','CatelogController@index');
 Route::get('posts','PostController@index');
 Route::get('nuxts','NuxtController@index');
-
+Route::resource('comment','CommentsController');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
