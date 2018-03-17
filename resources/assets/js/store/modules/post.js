@@ -80,7 +80,7 @@ export const actions = {
   },
   async delete ({dispatch}, {post_id}) {
     try {
-      let {data} = await axios.delete(api.post.update(post_id))
+      let {data} = await axios.delete(api.post.delete(post_id))
       return data
     } catch (err) {
       console.log(err)

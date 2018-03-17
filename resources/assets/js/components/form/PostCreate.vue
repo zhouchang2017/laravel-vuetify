@@ -20,7 +20,7 @@
 
                 <v-select
                         label="服务器"
-                        :items="nuxts"
+                        :items="nuxts.data"
                         item-text="name"
                         item-value="id"
                         v-model="selectedNuxts"
@@ -84,6 +84,17 @@
                             @imageAdded="handleImageAdded" v-model="content">
                 </vue-editor>
 
+                <v-switch
+                        class="mt-5"
+                        label="是否热门(推荐)"
+                        v-model="isHot"
+                ></v-switch>
+
+                <v-switch
+                        label="是否隐藏(屏蔽)"
+                        v-model="isHidden"
+                ></v-switch>
+
             </v-card-text>
             <v-divider class="mt-5"></v-divider>
             <v-card-actions>
@@ -116,6 +127,8 @@
         valid: true,
         title: '',
         avatar: '',
+        isHot: false,
+        isHidden: false,
         selectedNuxts: [],
         selectedCatelogs: [],
         titleRules: [
@@ -131,7 +144,7 @@
         content: '',
 
         catelogs: [],
-        nuxts: []
+        nuxts: {}
       }
     },
     methods: {
@@ -162,10 +175,10 @@
 
       },
       fetchCatelogs () {
-        return this.$store.dispatch('catelog/get')
+        return this.$store.dispatch('catelog/index')
       },
       fetchNuxts () {
-        return this.$store.dispatch('nuxt/get')
+        return this.$store.dispatch('nuxt/index')
       },
       nuxtSelect ({parent, item}) {
         parent.selectItem(item)
@@ -196,7 +209,9 @@
           avatar: this.avatar,
           nuxts: this.selectedNuxts,
           catelogs: this.selectedCatelogs,
-          body: this.content
+          body: this.content,
+          is_hot: this.isHot,
+          hidden: this.isHidden,
         }
       }
     },

@@ -13,8 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('catelogs','CatelogController@index');
-Route::get('nuxts','NuxtController@index');
+Route::get('catelog','CatelogController@index');
 Route::resource('comment','CommentsController');
 Route::group(['middleware' => ['auth:api','refresh']], function () {
     Route::post('logout', 'Auth\LoginController@logout');
@@ -25,6 +24,7 @@ Route::group(['middleware' => ['auth:api','refresh']], function () {
 
     Route::resource('post','PostController');
 
+    Route::resource('nuxt','NuxtController');
 
     Route::patch('settings/profile', 'Settings\UpdateProfile');
     Route::patch('settings/password', 'Settings\UpdatePassword');

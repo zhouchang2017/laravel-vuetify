@@ -20,7 +20,7 @@
 
                 <v-select
                         label="服务器"
-                        :items="nuxts"
+                        :items="nuxts.data"
                         item-text="name"
                         item-value="id"
                         v-model="selectedNuxts"
@@ -164,7 +164,7 @@
         content: '',
 
         catelogs: [],
-        nuxts: []
+        nuxts: {}
       }
     },
     methods: {
@@ -195,10 +195,10 @@
 
       },
       fetchCatelogs () {
-        return this.$store.dispatch('catelog/get')
+        return this.$store.dispatch('catelog/index')
       },
       fetchNuxts () {
-        return this.$store.dispatch('nuxt/get')
+        return this.$store.dispatch('nuxt/index')
       },
       nuxtSelect ({parent, item}) {
         parent.selectItem(item)

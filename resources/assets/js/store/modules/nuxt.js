@@ -16,21 +16,71 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async get ({commit, dispatch, getters}) {
-    if (!getters.nuxts) {
-      try {
-        let {data} = await axios.get(api.nuxt.get())
-        commit(types.SAVE_NUXT, {nuxts: data})
-      } catch (err) {
-        console.log(err)
-        dispatch('message/responseMessage', {
-          type: 'error',
-          modal: true,
-          text: JSON.stringify(err.response.data)
-        }, {root: true})
-      }
+  async index ({dispatch}, queryBuild) {
+    try {
+      let {data} = await axios.get(api.nuxt.index(), {params: queryBuild})
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
     }
-    return getters.nuxts
+  },
+  async store ({dispatch}, {formDate}) {
+    try {
+      let {data} = await axios.post(api.nuxt.store(), formDate)
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+      return false
+    }
+  },
+  async edit ({dispatch}, {id}) {
+    try {
+      let {data} = await axios.get(api.nuxt.edit(id))
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
+  },
+  async update ({dispatch}, {id, props}) {
+    try {
+      let {data} = await axios.patch(api.nuxt.update(id), {...props})
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
+  },
+  async delete ({dispatch}, {id}) {
+    try {
+      let {data} = await axios.delete(api.nuxt.delete(id))
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
   }
 }
 // getters

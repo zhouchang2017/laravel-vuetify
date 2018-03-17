@@ -16,21 +16,19 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async get ({commit, dispatch, getters}) {
-    if (!getters.catelogs) {
-      try {
-        let {data} = await axios.get(api.catelog.get())
-        commit(types.SAVE_CATELOG, {cateloges: data})
-      } catch (err) {
-        console.log(err)
-        dispatch('message/responseMessage', {
-          type: 'error',
-          modal: true,
-          text: JSON.stringify(err.response.data)
-        }, {root: true})
-      }
+  async index ({commit, dispatch, getters}) {
+    try {
+      let {data} = await axios.get(api.catelog.index())
+      commit(types.SAVE_CATELOG, {cateloges: data})
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
     }
-    return getters.catelogs
   }
 }
 // getters

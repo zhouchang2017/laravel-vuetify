@@ -10,76 +10,38 @@
             </v-list>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-list dense>
-            <template v-for="(item, i) in items">
-                <v-layout
-                        row
-                        v-if="item.heading"
-                        align-center
-                        :key="i"
+        <v-list>
+            <template v-for="item in items">
+                <v-list-group
+                        v-if="item.items"
+                        v-model="item.active"
+                        :prepend-icon="item.action"
+                        no-action
                 >
-                    <v-flex xs6>
-                        <v-subheader v-if="item.heading">
-                            {{ item.heading }}
-                        </v-subheader>
-                    </v-flex>
-                    <v-flex xs6 class="text-xs-center">
-                        <a href="#!" class="body-2 black--text">EDIT</a>
-                    </v-flex>
-                </v-layout>
-                <v-list-group v-else-if="item.children" :prepend-icon="item.icon" v-model="item.model" no-action>
-                    <v-list-tile exact slot="activator" @click="">
+                    <v-list-tile slot="activator">
                         <v-list-tile-content>
-                            <v-list-tile-title>
-                                {{ item.title }}
-                            </v-list-tile-title>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                    <v-list-tile
-                            v-for="(child, i) in item.children"
-                            :key="i"
-                            append
-                            exact
-                            :to="child.route"
-                            @click=""
-                    >
-                        <v-list-tile-action v-if="child.icon">
-                            <v-icon>{{ child.icon }}</v-icon>
-                        </v-list-tile-action>
+                    <v-list-tile exact v-for="subItem in item.items" :key="subItem.title" :to="subItem.route" @click="">
                         <v-list-tile-content>
-                            <v-list-tile-title>
-                                {{ child.title }}
-                            </v-list-tile-title>
+                            <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
                         </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-icon>{{ subItem.action }}</v-icon>
+                        </v-list-tile-action>
                     </v-list-tile>
                 </v-list-group>
-                <v-list-tile append exact :to="item.route" v-else @click="">
+                <v-list-tile exact v-else @click="" :to="item.route">
                     <v-list-tile-action>
-                        <v-icon>{{ item.icon }}</v-icon>
+                        <v-icon>{{ item.action }}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>
-                            {{ item.title }}
-                        </v-list-tile-title>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </template>
         </v-list>
-        <!--<v-list>-->
-        <!--<v-list-tile-->
-        <!--value="true"-->
-        <!--v-for="(item, i) in items"-->
-        <!--:key="i"-->
-        <!--:to="item.route"-->
-        <!--&gt;-->
-        <!--<v-list-tile-action>-->
-        <!--<v-icon light v-html="item.icon"></v-icon>-->
-        <!--</v-list-tile-action>-->
-        <!--<v-list-tile-content>-->
-        <!--<v-list-tile-title v-text="item.title"></v-list-tile-title>-->
-        <!--</v-list-tile-content>-->
-        <!--</v-list-tile>-->
-        <!--</v-list>-->
     </div>
 </template>
 
@@ -89,6 +51,29 @@
       return {
         name: this.$t('nav_menu_title'),
         items: [
+          {
+            action: 'dashboard',
+            title: this.$t('dash_board'),
+            route: {name: 'home'}
+          },
+          {
+            action: 'art_track',
+            title: this.$t('post'),
+            items: [
+              {title: this.$t('article_list'),route: {name: 'post.index'}},
+              {title: this.$t('article_create'),route: {name: 'post.create'}},
+            ]
+          },
+          {
+            action: 'settings_system_daydream',
+            title: this.$t('nuxt'),
+            items: [
+              {title: this.$t('nuxt_list'),route: {name: 'nuxt.index'}},
+              {title: this.$t('nuxt_create'),route: {name: 'nuxt.create'}},
+            ]
+          }
+        ],
+        itemss: [
           {title: 'Dashboard', icon: 'dashboard', route: {name: 'home'}},
           {title: 'Account', icon: 'account_box', route: {name: 'settings.profile'}},
           {

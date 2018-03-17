@@ -25,6 +25,21 @@ export default ({authGuard, guestGuard}) => [
       component: ()=>import('~/pages/post/edit')
     },
     {
+      path: '/nuxt',
+      name: 'nuxt.index',
+      component: ()=>import('~/pages/nuxt/index')
+    },
+    {
+      path: '/nuxt/create',
+      name: 'nuxt.create',
+      component: ()=>import('~/pages/nuxt/create')
+    },
+    {
+      path: '/nuxt/:id/edit',
+      name: 'nuxt.edit',
+      component: ()=>import('~/pages/nuxt/edit')
+    },
+    {
       path: '/settings',
       component: ()=>import('~/pages/settings/index.vue'),
       children: [

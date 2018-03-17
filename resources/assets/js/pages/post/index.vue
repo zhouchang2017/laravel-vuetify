@@ -14,6 +14,7 @@
                     :total-items="body.meta.total"
                     :loading="loading"
                     class="elevation-1"
+                    :rows-per-page-items="[5,10,20,40]"
             >
                 <template slot="items" slot-scope="props">
                     <td>

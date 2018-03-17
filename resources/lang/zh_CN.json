@@ -32,10 +32,18 @@
   "new_password": "New Password",
   "password_length_hint": "At least 8 characters",
   "nav_menu_title": "Application Menu",
+  "dash_board": "控制台",
+  "post": "文章",
   "article_list":"文章列表",
   "article_create":"文章发布",
   "article_edit":"文章编辑",
   "post_create_success":"文章发布成功",
   "post_update_success":"文章更新成功",
-  "remove_img_success":"图片删除成功"
+  "remove_img_success":"图片删除成功",
+  "nuxt": "客户端",
+  "nuxt_list":"客户端列表",
+  "nuxt_create":"新建客户端",
+  "nuxt_edit":"客户端编辑",
+  "nuxt_create_success":"客户端创建成功",
+  "nuxt_update_success":"客户端更新成功"
 }

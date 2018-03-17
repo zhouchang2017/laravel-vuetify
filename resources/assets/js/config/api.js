@@ -1,9 +1,14 @@
 const api = {
   catelog: {
-    get: () => 'catelogs'
+    index: () => 'catelog'
   },
   nuxt: {
-    get: () => 'nuxts'
+    index: () => 'nuxt',
+    show: id => `nuxt/${id}`,
+    edit: id => `nuxt/${id}/edit`,
+    store: () => 'nuxt',
+    update: id => `nuxt/${id}`,
+    delete: id => `nuxt/${id}`
   },
   file: {
     store: () => 'fs/upload'
