@@ -17,6 +17,7 @@ const api = {
   },
   post: {
     index: () => 'post',
+    show: id => `post/${id}`,
     store: () => 'post/store',
     update: id => `post/${id}`
   }

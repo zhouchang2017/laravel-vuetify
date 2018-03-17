@@ -106,12 +106,6 @@
     components: {
       UploadButton, Upload, VueEditor
     },
-    props: {
-      editDate: {
-        type: Object,
-        default: {}
-      },
-    },
     data () {
       return {
         uploadProgress: 0,
@@ -190,12 +184,6 @@
         this.errorMessages = []
         this.formHasErrors = false
         this.$refs.form.reset()
-      },
-      initEdit (post) {
-        console.log(post)
-        this.title = post.title
-        this.avatar = post.avatar
-        this.body = post.body
       }
     },
     computed: {
@@ -217,7 +205,6 @@
     async created () {
       this.catelogs = await this.fetchCatelogs()
       this.nuxts = await this.fetchNuxts()
-      this.initEdit(this.editDate)
     }
   }
 </script>

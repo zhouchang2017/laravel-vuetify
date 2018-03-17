@@ -727,7 +727,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/0b5930be73582369e10c4d4bb7a12bac927a203c",
+                "url": "https://files.phpcomposer.com/files/lcobucci/jwt/0b5930be73582369e10c4d4bb7a12bac927a203c.zip",
                 "reference": "0b5930be73582369e10c4d4bb7a12bac927a203c",
                 "shasum": ""
             },
@@ -991,7 +991,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/namshi/jose/zipball/89a24d7eb3040e285dd5925fcad992378b82bcff",
+                "url": "https://files.phpcomposer.com/files/namshi/jose/89a24d7eb3040e285dd5925fcad992378b82bcff.zip",
                 "reference": "89a24d7eb3040e285dd5925fcad992378b82bcff",
                 "shasum": ""
             },

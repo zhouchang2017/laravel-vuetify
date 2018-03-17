@@ -1,85 +1,82 @@
 <template>
     <div>
-        <v-toolbar flat>
-            <v-list>
-                <v-list-tile>
-                    <v-list-tile-title class="title">
-                        {{ name }}
-                    </v-list-tile-title>
-                </v-list-tile>
-            </v-list>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-data-table
-                v-if="loaded"
-                :headers="headers"
-                :items="body.data"
-                :search="search"
-                :pagination.sync="pagination"
-                :total-items="body.meta.total"
-                :loading="loading"
-                class="elevation-1"
-        >
-            <template slot="items" slot-scope="props">
-                <td>
-                    <v-card class="mt-1 mb-1">
-                        <v-card-media
-                                flat
-                                tile
-                                contain
-                                class="white--text"
-                                width="200px"
-                                height="100px"
-                                :src="props.item.avatar"
-                        >
-                        </v-card-media>
+        <v-card>
+            <v-card-title primary-title class="grey lighten-4">
+                <h3 class="headline mb-0">{{ name }}</h3>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-data-table
+                    v-if="loaded"
+                    :headers="headers"
+                    :items="body.data"
+                    :search="search"
+                    :pagination.sync="pagination"
+                    :total-items="body.meta.total"
+                    :loading="loading"
+                    class="elevation-1"
+            >
+                <template slot="items" slot-scope="props">
+                    <td>
+                        <v-card class="mt-1 mb-1">
+                            <v-card-media
+                                    flat
+                                    tile
+                                    contain
+                                    class="white--text"
+                                    width="200px"
+                                    height="100px"
+                                    :src="props.item.avatar"
+                            >
+                            </v-card-media>
+                        </v-card>
+                    </td>
+                    <td class="text-xs-right">{{ props.item.title }}</td>
+                    <td class="text-xs-right">{{ props.item.read_num }}</td>
+                    <td class="text-xs-right">{{ props.item.fake_read_num }}</td>
+                    <td class="text-xs-right">
+                        <v-switch
+                                v-model="props.item.is_hot"
+                                color="success"
+                                hide-details
+                                @change="isHot({post_id:props.item.id,is_hot:props.item.is_hot})"
+                        ></v-switch>
+                    </td>
+                    <td class="text-xs-right">
+                        <v-switch
+                                v-model="props.item.hidden"
+                                color="success"
+                                hide-details
+                                @change="isHidden({post_id:props.item.id,hidden:props.item.hidden})"
+                        ></v-switch>
+                    </td>
+                    <td class="text-xs-right">{{ props.item.updated_at }}</td>
+                    <td class="justify-center">
+                        <div class="d-inline-flex">
+                            <v-btn icon @click="editItem(props.item)">
+                                <v-icon color="teal">edit</v-icon>
+                            </v-btn>
+                            <v-btn icon @click="deleteItem(props.item)">
+                                <v-icon color="pink">delete</v-icon>
+                            </v-btn>
+                        </div>
+                    </td>
+                </template>
+            </v-data-table>
+            <v-layout row justify-center>
+                <v-dialog v-model="dialog" max-width="290">
+                    <v-card>
+                        <v-card-title class="headline">{{ dialogInfo.title }}</v-card-title>
+                        <v-card-text>{{ dialogInfo.text }}
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
+                            <v-btn color="green darken-1" flat="flat" @click.native="deleteOk">Agree</v-btn>
+                        </v-card-actions>
                     </v-card>
-                </td>
-                <td class="text-xs-right">{{ props.item.title }}</td>
-                <td class="text-xs-right">{{ props.item.read_num }}</td>
-                <td class="text-xs-right">{{ props.item.fake_read_num }}</td>
-                <td class="text-xs-right">
-                    <v-switch
-                            v-model="props.item.is_hot"
-                            color="success"
-                            hide-details
-                            @change="isHot({post_id:props.item.id,is_hot:props.item.is_hot})"
-                    ></v-switch>
-                </td>
-                <td class="text-xs-right">
-                    <v-switch
-                            v-model="props.item.hidden"
-                            color="success"
-                            hide-details
-                            @change="isHidden({post_id:props.item.id,hidden:props.item.hidden})"
-                    ></v-switch>
-                </td>
-                <td class="text-xs-right">{{ props.item.updated_at }}</td>
-                <td class="text-xs-right justify-center">
-                    <v-btn icon @click="editItem(props.item)">
-                        <v-icon color="teal">edit</v-icon>
-                    </v-btn>
-                    <v-btn icon @click="deleteItem(props.item)">
-                        <v-icon color="pink">delete</v-icon>
-                    </v-btn>
-                </td>
-            </template>
-        </v-data-table>
-        <v-layout row justify-center>
-            <v-btn color="primary" dark @click.native.stop="dialog = true">Open Dialog</v-btn>
-            <v-dialog v-model="dialog" max-width="290">
-                <v-card>
-                    <v-card-title class="headline">{{ dialogInfo.title }}</v-card-title>
-                    <v-card-text>{{ dialogInfo.text }}
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
-                        <v-btn color="green darken-1" flat="flat" @click.native="deleteOk">Agree</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </v-layout>
+                </v-dialog>
+            </v-layout>
+        </v-card>
     </div>
 </template>
 
@@ -114,7 +111,7 @@
           {text: 'Is_hot', value: 'is_hot'},
           {text: 'Hidden', value: 'hidden'},
           {text: 'Updated_at', value: 'updated_at'},
-          {text: 'Actions', value: 'name', sortable: false}
+          {text: 'Actions', value: 'name', align: 'right', sortable: false}
         ]
       }
     },
@@ -148,7 +145,7 @@
         this.loading = false
       },
       editItem (item) {
-        console.log(item)
+        this.$router.push({name: 'post.edit', params: {id: item.id}})
       },
       deleteItem (item) {
         this.dialog = true

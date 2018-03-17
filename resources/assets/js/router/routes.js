@@ -20,6 +20,11 @@ export default ({authGuard, guestGuard}) => [
       component: ()=>import('~/pages/post/create')
     },
     {
+      path: '/post/edit/:id',
+      name: 'post.edit',
+      component: ()=>import('~/pages/post/edit')
+    },
+    {
       path: '/settings',
       component: ()=>import('~/pages/settings/index.vue'),
       children: [

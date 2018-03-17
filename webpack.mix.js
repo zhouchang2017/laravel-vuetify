@@ -1,5 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
+// const webpack = require('webpack')
 const mix = require('laravel-mix')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
@@ -30,10 +30,10 @@ if (mix.inProduction()) {
 mix.setPublicPath('public/')
 
 mix.webpackConfig({
-  output: {
-    chunkFilename: 'js/[id].[chunkhash].js',
-    publicPath: '/'
-  },
+  // output: {
+  //   chunkFilename: 'js/[id].[chunkhash].js',
+  //   publicPath: '/'
+  // },
   plugins: [],
   resolve: {
     alias: {

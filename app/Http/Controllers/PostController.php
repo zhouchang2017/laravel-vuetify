@@ -64,4 +64,10 @@ class PostController extends Controller
         return response()->json($response,201);
 
     }
+
+    public function show($id)
+    {
+        $post = $this->repository->find($id);
+        return new PostResource($post);
+    }
 }

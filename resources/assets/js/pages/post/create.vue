@@ -1,30 +1,24 @@
 <template>
-  <div>
-    <v-toolbar flat>
-      <v-list>
-        <v-list-tile>
-          <v-list-tile-title class="title">
-            {{ name }}
-          </v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-toolbar>
+  <v-card>
+    <v-card-title primary-title class="grey lighten-4">
+      <h3 class="headline mb-0">{{ name }}</h3>
+    </v-card-title>
     <v-divider></v-divider>
-    <post-edit/>
-  </div>
+    <post-create/>
+  </v-card>
 </template>
 
 <script>
-  import PostEdit from '~/components/form/PostEdit.vue'
+  import PostCreate from '~/components/form/PostCreate.vue'
   export default {
-    name: 'create',
+    name: 'article_create',
     data () {
       return {
         name: this.$t('article_create'),
       }
     },
     components:{
-      PostEdit
+      PostCreate
     }
 
   }

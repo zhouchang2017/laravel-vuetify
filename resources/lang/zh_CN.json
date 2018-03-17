@@ -34,5 +34,6 @@
   "nav_menu_title": "Application Menu",
   "article_list":"文章列表",
   "article_create":"文章发布",
+  "article_edit":"文章编辑",
   "remove_img_success":"图片删除成功"
 }
