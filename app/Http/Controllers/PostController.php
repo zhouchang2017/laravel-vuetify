@@ -70,4 +70,19 @@ class PostController extends Controller
         $post = $this->repository->find($id);
         return new PostResource($post);
     }
+
+    public function edit($id)
+    {
+        $post = $this->repository->with(['nuxts','catelogs'])->find($id);
+        return new PostResource($post);
+    }
+
+    public function destroy($id)
+    {
+        $deleted = $this->repository->delete($id);
+        return response()->json([
+            'message' => 'Post deleted.',
+            'deleted' => $deleted,
+        ]);
+    }
 }

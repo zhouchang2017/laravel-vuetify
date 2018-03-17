@@ -35,5 +35,7 @@
   "article_list":"文章列表",
   "article_create":"文章发布",
   "article_edit":"文章编辑",
+  "post_create_success":"文章发布成功",
+  "post_update_success":"文章更新成功",
   "remove_img_success":"图片删除成功"
 }

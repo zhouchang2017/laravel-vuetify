@@ -4,7 +4,7 @@
             <h3 class="headline mb-0">{{ name }}</h3>
         </v-card-title>
         <v-divider></v-divider>
-        <post-edit :editDate="body"/>
+        <post-edit v-if="loaded" :editDate="body"/>
     </v-card>
 </template>
 
@@ -16,14 +16,16 @@
     data () {
       return {
         name: this.$t('article_edit'),
-        body: {}
+        body: {},
+        loaded:false
       }
     },
     components: {
       PostEdit
     },
     async created () {
-      this.body = await this.$store.dispatch('post/show', {id: this.$route.params.id})
+      this.body = await this.$store.dispatch('post/edit', {id: this.$route.params.id})
+      this.loaded = true
     }
   }
 </script>

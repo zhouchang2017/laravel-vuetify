@@ -84,10 +84,33 @@
                             @imageAdded="handleImageAdded" v-model="content">
                 </vue-editor>
 
+                <v-text-field
+                        label="阅读量"
+                        v-model="readNum"
+                        readonly
+                        disabled
+                ></v-text-field>
+
+                <v-text-field
+                        type="number"
+                        label="虚拟阅读量"
+                        v-model="fakeReadNum"
+                        :rules="[() => /^\d+$/.test(fakeReadNum) || 'This field is must be unsignedInteger']"
+                ></v-text-field>
+
+                <v-switch
+                        label="是否热门(推荐)"
+                        v-model="isHot"
+                ></v-switch>
+
+                <v-switch
+                        label="是否隐藏(屏蔽)"
+                        v-model="isHidden"
+                ></v-switch>
+
             </v-card-text>
             <v-divider class="mt-5"></v-divider>
             <v-card-actions>
-                <v-btn flat @click="resetForm">Clear</v-btn>
                 <v-spacer></v-spacer>
 
                 <v-btn color="primary" :disabled="!valid" flat @click="submit">Submit</v-btn>
@@ -124,6 +147,10 @@
         avatar: '',
         selectedNuxts: [],
         selectedCatelogs: [],
+        isHot: false,
+        isHidden: false,
+        readNum: 0,
+        fakeReadNum: 0,
         titleRules: [
           (v) => !!v || 'Title is required',
           (v) => v && v.length <= 64 || 'Title must be less than 64 characters'
@@ -182,7 +209,10 @@
       async submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          await this.$store.dispatch('post/store', {formDate: this.formDate})
+          await this.$store.dispatch('post/update', {post_id: this.editDate.id, props: this.formDate})
+          this.$store.dispatch('message/responseMessage',{
+            text:this.$t('post_update_success')
+          })
           this.$router.replace({name: 'post.index'})
         }
       },
@@ -195,7 +225,15 @@
         console.log(post)
         this.title = post.title
         this.avatar = post.avatar
-        this.body = post.body
+        this.selectedNuxts = post.nuxts.map(item => item.id)
+        this.selectedCatelogs = post.catelogs.map(item => item.id)
+        this.$refs['fileInput'].imageUrl = post.avatar
+        this.$refs['fileInput'].progress = 100
+        this.content = post.body
+        this.isHot = post.is_hot
+        this.isHidden = post.hidden
+        this.fakeReadNum = post.fake_read_num
+        this.readNum = post.read_num
       }
     },
     computed: {
@@ -205,7 +243,10 @@
           avatar: this.avatar,
           nuxts: this.selectedNuxts,
           catelogs: this.selectedCatelogs,
-          body: this.content
+          body: this.content,
+          is_hot: this.isHot,
+          hidden: this.isHidden,
+          fake_read_num: this.fakeReadNum
         }
       }
     },

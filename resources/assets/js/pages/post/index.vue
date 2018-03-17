@@ -89,14 +89,18 @@
         dialogInfo: {
           title: '',
           text: '',
-          index: null
+          index: null,
+          postId: null
         },
         loaded: false,
         name: this.$t('article_list'),
         search: '',
         body: {},
         loading: false,
-        pagination: {},
+        pagination: {
+          sortBy: 'updated_at',
+          descending: 'desc'
+        },
         headers: [
           {
             text: 'Avatar',
@@ -152,11 +156,16 @@
         this.dialogInfo.title = 'Are you sure you want to delete this item?'
         this.dialogInfo.text = `Post title => ${item.title}`
         this.dialogInfo.index = this.body.data.indexOf(item)
+        this.dialogInfo.postId = item.id
       },
-      deleteOk () {
+      async deleteOk () {
+        let res = await this.$store.dispatch('post/delete', {post_id: this.dialogInfo.postId})
         this.dialog = false
+        this.$store.dispatch('message/responseMessage',{
+          text:res.message
+        })
         this.body.data.splice(this.dialogInfo.index, 1)
-        this.dialogInfo = {title: '', text: '', index: null}
+        this.dialogInfo = {title: '', text: '', index: null, postId: null}
       }
     },
     async created () {

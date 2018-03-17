@@ -177,6 +177,9 @@
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
           await this.$store.dispatch('post/store', {formDate: this.formDate})
+          this.$store.dispatch('message/responseMessage',{
+            text:this.$t('post_create_success')
+          })
           this.$router.replace({name: 'post.index'})
         }
       },

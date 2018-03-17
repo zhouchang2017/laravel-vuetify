@@ -18,8 +18,10 @@ const api = {
   post: {
     index: () => 'post',
     show: id => `post/${id}`,
-    store: () => 'post/store',
-    update: id => `post/${id}`
+    edit: id => `post/${id}/edit`,
+    store: () => 'post',
+    update: id => `post/${id}`,
+    delete: id => `post/${id}`
   }
 }
 

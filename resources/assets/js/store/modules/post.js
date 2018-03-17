@@ -38,6 +38,19 @@ export const actions = {
       }, {root: true})
     }
   },
+  async edit ({dispatch}, {id}) {
+    try {
+      let {data} = await axios.get(api.post.edit(id))
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
+  },
   async store ({dispatch}, {formDate}) {
     try {
       let {data} = await axios.post(api.post.store(), formDate)
@@ -49,11 +62,25 @@ export const actions = {
         modal: true,
         text: JSON.stringify(err.response.data)
       }, {root: true})
+      return false
     }
   },
   async update ({dispatch}, {post_id, props}) {
     try {
       let {data} = await axios.patch(api.post.update(post_id), {...props})
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
+  },
+  async delete ({dispatch}, {post_id}) {
+    try {
+      let {data} = await axios.delete(api.post.update(post_id))
       return data
     } catch (err) {
       console.log(err)
