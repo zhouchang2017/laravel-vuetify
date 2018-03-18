@@ -28,6 +28,12 @@ class PostController extends Controller
         return PostResource::collection($this->repository->paginate($request->limit ?? 5));
     }
 
+    public function count()
+    {
+        $count = $this->repository->all()->count();
+        return response()->json($count,200);
+    }
+
     public function store(StorePostRequest $request)
     {
         $post = $this->repository->create([

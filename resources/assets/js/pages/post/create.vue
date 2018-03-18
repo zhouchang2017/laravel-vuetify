@@ -11,10 +11,10 @@
 <script>
   import PostCreate from '~/components/form/PostCreate.vue'
   export default {
-    name: 'article_create',
+    name: 'post_create',
     data () {
       return {
-        name: this.$t('article_create'),
+        name: this.$t('post_create'),
       }
     },
     components:{

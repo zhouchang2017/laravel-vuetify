@@ -12,10 +12,10 @@
   import PostEdit from '~/components/form/PostEdit.vue'
 
   export default {
-    name: 'article_edit',
+    name: 'post_edit',
     data () {
       return {
-        name: this.$t('article_edit'),
+        name: this.$t('post_edit'),
         body: {},
         loaded:false
       }

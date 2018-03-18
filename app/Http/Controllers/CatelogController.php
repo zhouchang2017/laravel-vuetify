@@ -2,85 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CatelogRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Catelog as CatelogResource;
-use App\Catelog;
 
 class CatelogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return CatelogResource::collection(Catelog::all());
-    }
+    protected $repository;
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * NuxtController constructor.
+     * @param $repository
      */
-    public function create()
+    public function __construct(CatelogRepository $repository)
     {
-        //
+        $this->repository = $repository;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function index(Request $request)
+    {
+        return CatelogResource::collection($this->repository->all());
+    }
+
+    public function count()
+    {
+        $count = $this->repository->all()->count();
+        return response()->json($count,200);
+    }
+
     public function store(Request $request)
     {
-        //
+        try {
+            $catelog = $this->repository->create([
+                'name'   => $request->name,
+                'en_name' => $request->input('en_name',null),
+            ]);
+            return response()->json($catelog, 201);
+        } catch (\Exception $e) {
+            $errorMessage = 'create catelog failed ' . $e->getMessage();
+            Log::info($errorMessage);
+            return false;
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $this->repository->update($request->all(), $id);
+
+        $response = [
+            'message' => 'Catelog updated.',
+        ];
+
+        return response()->json($response, 201);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function show($id)
+    {
+        $catelog = $this->repository->find($id);
+        return new CatelogResource($catelog);
+    }
+
+    public function edit($id)
+    {
+        $catelog = $this->repository->find($id);
+        return new CatelogResource($catelog);
+    }
+
     public function destroy($id)
     {
-        //
+        $deleted = $this->repository->delete($id);
+        return response()->json([
+            'message' => 'Nuxt deleted.',
+            'deleted' => $deleted,
+        ]);
     }
 }

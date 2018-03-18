@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Nuxt;
 use App\Repositories\NuxtRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Nuxt as NuxtResource;
@@ -23,6 +22,12 @@ class NuxtController extends Controller
     public function index(Request $request)
     {
         return NuxtResource::collection($this->repository->paginate($request->limit ?? 5));
+    }
+
+    public function count()
+    {
+        $count = $this->repository->all()->count();
+        return response()->json($count,200);
     }
 
     public function store(Request $request)

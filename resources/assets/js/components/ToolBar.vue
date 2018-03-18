@@ -11,14 +11,15 @@
     <!-- Authenticated -->
     <template v-if="authenticated">
       <progress-bar :show="busy"></progress-bar>
-      <v-btn flat :to="{ name: 'settings.profile' }">{{ user.name }}</v-btn>
+      <v-btn flat>{{ user.name }}</v-btn>
+      <!--<v-btn flat :to="{ name: 'settings.profile' }">{{ user.name }}</v-btn>-->
       <v-btn flat @click.prevent="logout">{{ $t('logout') }}</v-btn>
     </template>
 
     <!-- Guest -->
     <template v-else>
       <v-btn flat :to="{ name: 'login' }">{{ $t('login') }}</v-btn>
-      <v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>
+      <!--<v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>-->
     </template>
   </v-toolbar>
 </template>

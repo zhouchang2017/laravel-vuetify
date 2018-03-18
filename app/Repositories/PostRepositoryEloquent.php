@@ -6,8 +6,6 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\PostRepository;
 use App\Post;
-use App\Validators\PostValidator;
-
 /**
  * Class PostRepositoryEloquent.
  *

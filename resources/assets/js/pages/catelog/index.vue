@@ -8,17 +8,12 @@
             <v-data-table
                     v-if="loaded"
                     :headers="headers"
-                    :items="body.data"
-                    :search="search"
-                    :pagination.sync="pagination"
-                    :total-items="body.meta.total"
+                    :items="body"
                     :loading="loading"
                     class="elevation-1"
-                    :rows-per-page-items="[5,10,20,40]"
             >
                 <template slot="items" slot-scope="props">
                     <td class="text-xs-left">{{ props.item.id }}</td>
-                    <td class="text-xs-center">{{ props.item.prefix }}</td>
                     <td class="text-xs-center">{{ props.item.name }}</td>
                     <td class="text-xs-center">{{ props.item.post_count }}</td>
                     <td class="text-xs-center">{{ props.item.updated_at }}</td>
@@ -54,7 +49,7 @@
 
 <script>
   export default {
-    name: 'nuxt_index',
+    name: 'catelog_index',
     data () {
       return {
         dialog: false,
@@ -65,57 +60,39 @@
           id: null
         },
         loaded: false,
-        name: this.$t('nuxt_list'),
-        search: '',
+        name: this.$t('catelog_list'),
         body: {},
         loading: false,
-        pagination: {
-          sortBy: 'updated_at',
-          descending: 'desc'
-        },
         headers: [
           {text: 'id', value: 'id', align: 'left'},
-          {text: 'Prefix', value: 'prefix', align: 'center'},
-          {text: this.$t('client_name'), value: 'name', align: 'center'},
+          {text: 'Name', value: 'name', align: 'center'},
           {text: this.$t('post_count'), value: 'post_count', align: 'center'},
           {text: this.$t('updated_at'), value: 'updated_at', align: 'center'},
           {text: 'Actions', value: 'name', align: 'center', sortable: false}
         ]
       }
     },
-    watch: {
-      pagination: {
-        async handler () {
-          await this.fetch()
-        },
-        deep: true
-      }
-    },
     methods: {
       async fetch () {
         this.loading = true
-        const {sortBy, descending, page, rowsPerPage} = this.pagination
-        let queryBuild = {page}
-        if (sortBy) queryBuild.orderBy = sortBy
-        if (descending) queryBuild.sortedBy = 'desc'
-        if (rowsPerPage) queryBuild.limit = rowsPerPage
-        console.log(queryBuild)
-        let body = await this.$store.dispatch('nuxt/index', queryBuild)
+        let queryBuild = {}
+
+        let body = await this.$store.dispatch('catelog/index', queryBuild)
         this.$set(this, 'body', body)
         this.loading = false
       },
       editItem (item) {
-        this.$router.push({name: 'nuxt.edit', params: {id: item.id}})
+        this.$router.push({name: 'catelog.edit', params: {id: item.id}})
       },
       deleteItem (item) {
         this.dialog = true
         this.dialogInfo.title = 'Are you sure you want to delete this item?'
-        this.dialogInfo.text = `Client name => ${item.name}`
+        this.dialogInfo.text = `Catelog name => ${item.name}`
         this.dialogInfo.index = this.body.data.indexOf(item)
         this.dialogInfo.id = item.id
       },
       async deleteOk () {
-        let res = await this.$store.dispatch('nuxt/delete', {id: this.dialogInfo.id})
+        let res = await this.$store.dispatch('catelog/delete', {id: this.dialogInfo.id})
         this.dialog = false
         this.$store.dispatch('message/responseMessage', {
           text: res.message

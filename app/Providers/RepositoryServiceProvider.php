@@ -26,6 +26,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\CommentRepository::class, \App\Repositories\CommentRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\PostRepository::class, \App\Repositories\PostRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\NuxtRepository::class, \App\Repositories\NuxtRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\CatelogRepository::class, \App\Repositories\CatelogRepositoryEloquent::class);
         //:end-bindings:
     }
 }

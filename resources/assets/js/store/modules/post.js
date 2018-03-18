@@ -25,6 +25,19 @@ export const actions = {
       }, {root: true})
     }
   },
+  async count ({dispatch}) {
+    try {
+      let {data} = await axios.get(api.post.count())
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
+  },
   async show ({dispatch}, {id}) {
     try {
       let {data} = await axios.get(api.post.show(id))

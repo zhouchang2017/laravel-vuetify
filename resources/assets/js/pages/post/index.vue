@@ -83,7 +83,7 @@
 
 <script>
   export default {
-    name: 'index',
+    name: 'post_index',
     data () {
       return {
         dialog: false,
@@ -94,7 +94,7 @@
           postId: null
         },
         loaded: false,
-        name: this.$t('article_list'),
+        name: this.$t('post_list'),
         search: '',
         body: {},
         loading: false,
@@ -115,7 +115,7 @@
           {text: 'Fake_read_num', value: 'fake_read_num'},
           {text: 'Is_hot', value: 'is_hot'},
           {text: 'Hidden', value: 'hidden'},
-          {text: 'Updated_at', value: 'updated_at'},
+          {text: this.$t('updated_at'), value: 'updated_at'},
           {text: 'Actions', value: 'name', align: 'right', sortable: false}
         ]
       }

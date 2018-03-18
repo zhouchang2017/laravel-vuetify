@@ -4,15 +4,15 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\NuxtRepository;
-use App\Nuxt;
+use App\Repositories\CatelogRepository;
+use App\Catelog;
 
 /**
- * Class NuxtRepositoryEloquent.
+ * Class CatelogRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class NuxtRepositoryEloquent extends BaseRepository implements NuxtRepository
+class CatelogRepositoryEloquent extends BaseRepository implements CatelogRepository
 {
     /**
      * Specify Model class name
@@ -21,7 +21,7 @@ class NuxtRepositoryEloquent extends BaseRepository implements NuxtRepository
      */
     public function model()
     {
-        return Nuxt::class;
+        return Catelog::class;
     }
 
     

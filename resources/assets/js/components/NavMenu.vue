@@ -60,8 +60,8 @@
             action: 'art_track',
             title: this.$t('post'),
             items: [
-              {title: this.$t('article_list'),route: {name: 'post.index'}},
-              {title: this.$t('article_create'),route: {name: 'post.create'}},
+              {title: this.$t('post_list'),route: {name: 'post.index'}},
+              {title: this.$t('post_create'),route: {name: 'post.create'}},
             ]
           },
           {
@@ -70,6 +70,14 @@
             items: [
               {title: this.$t('nuxt_list'),route: {name: 'nuxt.index'}},
               {title: this.$t('nuxt_create'),route: {name: 'nuxt.create'}},
+            ]
+          },
+          {
+            action: 'toc',
+            title: this.$t('catelog'),
+            items: [
+              {title: this.$t('catelog_list'),route: {name: 'catelog.index'}},
+              {title: this.$t('catelog_create'),route: {name: 'catelog.create'}},
             ]
           }
         ],

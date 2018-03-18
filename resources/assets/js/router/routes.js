@@ -40,6 +40,21 @@ export default ({authGuard, guestGuard}) => [
       component: ()=>import('~/pages/nuxt/edit')
     },
     {
+      path: '/catelog',
+      name: 'catelog.index',
+      component: ()=>import('~/pages/catelog/index')
+    },
+    {
+      path: '/catelog/create',
+      name: 'catelog.create',
+      component: ()=>import('~/pages/catelog/create')
+    },
+    {
+      path: '/catelog/:id/edit',
+      name: 'catelog.edit',
+      component: ()=>import('~/pages/catelog/edit')
+    },
+    {
       path: '/settings',
       component: ()=>import('~/pages/settings/index.vue'),
       children: [

@@ -29,6 +29,19 @@ export const actions = {
       }, {root: true})
     }
   },
+  async count ({dispatch}) {
+    try {
+      let {data} = await axios.get(api.nuxt.count())
+      return data
+    } catch (err) {
+      console.log(err)
+      dispatch('message/responseMessage', {
+        type: 'error',
+        modal: true,
+        text: JSON.stringify(err.response.data)
+      }, {root: true})
+    }
+  },
   async store ({dispatch}, {formDate}) {
     try {
       let {data} = await axios.post(api.nuxt.store(), formDate)

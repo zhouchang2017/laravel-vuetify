@@ -17,6 +17,8 @@ class Catelog extends Resource
         return [
             'id'   => $this->id,
             'name' => $this->name,
+            'post_count' => $this->posts->count(),
+            'updated_at'  => $this->updated_at->diffForHumans(),
         ];
     }
 }

@@ -1,9 +1,16 @@
 const api = {
   catelog: {
-    index: () => 'catelog'
+    index: () => 'catelog',
+    count: () => 'catelog/count',
+    show: id => `catelog/${id}`,
+    edit: id => `catelog/${id}/edit`,
+    store: () => 'catelog',
+    update: id => `catelog/${id}`,
+    delete: id => `catelog/${id}`
   },
   nuxt: {
     index: () => 'nuxt',
+    count: () => 'nuxt/count',
     show: id => `nuxt/${id}`,
     edit: id => `nuxt/${id}/edit`,
     store: () => 'nuxt',
@@ -22,6 +29,7 @@ const api = {
   },
   post: {
     index: () => 'post',
+    count: () => 'post/count',
     show: id => `post/${id}`,
     edit: id => `post/${id}/edit`,
     store: () => 'post',
