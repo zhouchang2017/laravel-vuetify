@@ -29,11 +29,6 @@ if (mix.inProduction()) {
   ])
   mix.webpackConfig({
     plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      }),
       new CompressionWebpackPlugin({
         asset: '[path].gz[query]', //目标文件名
         algorithm: 'gzip', //使用gzip压缩
@@ -48,8 +43,8 @@ if (mix.inProduction()) {
 
 mix.webpackConfig({
   output: {
-    chunkFilename: 'js/[id].[chunkhash].js',
-    // chunkFilename: 'js/[id].js',
+    // chunkFilename: 'js/[id].[chunkhash].js',
+    chunkFilename: 'js/[id].js',
     publicPath: '/'
   },
   plugins: [],

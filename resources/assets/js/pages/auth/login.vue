@@ -41,15 +41,15 @@
             <submit-button :block="true" :form="form" :label="$t('login')"></submit-button>
 
           </v-card-text>
-          <v-card-actions>
-            <router-link :to="{ name: 'register' }">
-              {{ $t('register') }}
-            </router-link>
-            <v-spacer></v-spacer>
-            <router-link :to="{ name: 'password.request' }">
-              {{ $t('forgot_password') }}
-            </router-link>
-          </v-card-actions>
+          <!--<v-card-actions>-->
+            <!--<router-link :to="{ name: 'register' }">-->
+              <!--{{ $t('register') }}-->
+            <!--</router-link>-->
+            <!--<v-spacer></v-spacer>-->
+            <!--<router-link :to="{ name: 'password.request' }">-->
+              <!--{{ $t('forgot_password') }}-->
+            <!--</router-link>-->
+          <!--</v-card-actions>-->
         </form>
       </v-card>
     </v-flex>
