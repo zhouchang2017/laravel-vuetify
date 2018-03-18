@@ -1,8 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const mix = require('laravel-mix')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 mix
@@ -12,6 +10,7 @@ mix
 .copyDirectory('resources/assets/img', 'public/img')
 
 if (mix.inProduction()) {
+  const CompressionWebpackPlugin = require('compression-webpack-plugin')
   mix.version()
 
   mix.extract([
@@ -25,15 +24,21 @@ if (mix.inProduction()) {
     'vue-router',
     'vuetify',
     'vee-validate',
-    'vuex-router-sync'
+    'vuex-router-sync',
+    'vue2-editor'
   ])
   mix.webpackConfig({
     plugins: [
       new CompressionWebpackPlugin({
-        asset: '[path].gz[query]', //目标文件名
-        algorithm: 'gzip', //使用gzip压缩
-        threshold: 10240, //资源文件大于10240B=10kB时会被压缩
-        // minRatio: 0.8 //最小压缩比达到0.8时才会被压缩
+        asset: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: new RegExp(
+          '\\.(' +
+          ['js', 'css'].join('|') +
+          ')$'
+        ),
+        threshold: 10240,
+        minRatio: 0.8
       })
     ]
   })
@@ -43,8 +48,9 @@ if (mix.inProduction()) {
 
 mix.webpackConfig({
   output: {
-    // chunkFilename: 'js/[id].[chunkhash].js',
-    chunkFilename: 'js/[id].js',
+    chunkFilename: 'js/[id].[chunkhash].js',
+    // chunkFilename: 'js/[id].js',
+    // file: 'js/[name].[chunkhash].js',
     publicPath: '/'
   },
   plugins: [],
