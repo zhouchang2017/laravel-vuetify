@@ -57,7 +57,7 @@ export default {
       }
 
       // Log out the user.
-      await this.$store.dispatch('logout')
+      await this.$store.dispatch('auth/logout')
       this.busy = false
 
       // Redirect to login.
