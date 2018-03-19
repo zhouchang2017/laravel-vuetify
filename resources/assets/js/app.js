@@ -11,9 +11,9 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
-  i18n,
-  store,
-  router,
-  ...App
+	el: '#app',
+	i18n,
+	store,
+	router,
+	...App
 })

@@ -1,15 +1,18 @@
 const path = require('path')
 const webpack = require('webpack')
 const mix = require('laravel-mix')
+require('laravel-mix-purgecss')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 mix
-.js('resources/assets/js/app.js', 'public/js')
-.stylus('resources/assets/stylus/app.styl', 'public/css')
-.disableNotifications()
-.copyDirectory('resources/assets/img', 'public/img')
+  .js('resources/assets/js/app.js', 'public/js')
+  .stylus('resources/assets/stylus/app.styl', 'public/css')
+  .purgeCss()
+  .disableNotifications()
+  .copyDirectory('resources/assets/img', 'public/img')
 
 if (mix.inProduction()) {
+  console.log('prod')
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
   mix.version()
 
@@ -29,14 +32,14 @@ if (mix.inProduction()) {
   ])
   mix.webpackConfig({
     plugins: [
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      }),
       new CompressionWebpackPlugin({
         asset: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(
-          '\\.(' +
-          ['js', 'css'].join('|') +
-          ')$'
-        ),
         threshold: 10240,
         minRatio: 0.8
       })
@@ -53,7 +56,6 @@ mix.webpackConfig({
     // file: 'js/[name].[chunkhash].js',
     publicPath: '/'
   },
-  plugins: [],
   resolve: {
     alias: {
       '~': path.join(__dirname, './resources/assets/js')
