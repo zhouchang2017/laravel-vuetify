@@ -3,7 +3,7 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\\Comment;
+use App\Comment;
 
 /**
  * Class CommentTransformer.
@@ -15,7 +15,7 @@ class CommentTransformer extends TransformerAbstract
     /**
      * Transform the Comment entity.
      *
-     * @param \App\\Comment $model
+     * @param \App\Comment $model
      *
      * @return array
      */

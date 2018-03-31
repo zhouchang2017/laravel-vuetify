@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::apiResource('banner','BannerController');
+Route::get('nuxt/{id}/settings','NuxtController@settings');
 Route::resource('comment','CommentsController');
 Route::group(['middleware' => ['auth:api','refresh']], function () {
     Route::post('logout', 'Auth\LoginController@logout');

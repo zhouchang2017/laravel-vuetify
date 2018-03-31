@@ -13,6 +13,18 @@ use App\Post;
  */
 class PostRepositoryEloquent extends BaseRepository implements PostRepository
 {
+    protected $fieldSearchable = [
+        'title',
+        'id',
+        'avatar',
+        'body',
+        'originate',
+        'read_num',
+        'fake_read_num',
+        'hidden',
+        'is_hot',
+        'updated_at'
+    ];
     /**
      * Specify Model class name
      *

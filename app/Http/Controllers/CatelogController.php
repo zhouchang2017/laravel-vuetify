@@ -19,7 +19,7 @@ class CatelogController extends Controller
         $this->repository = $repository;
     }
 
-    public function index(Request $request)
+    public function index()
     {
         return CatelogResource::collection($this->repository->all());
     }

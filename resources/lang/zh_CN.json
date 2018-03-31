@@ -47,6 +47,7 @@
   "nuxt_list":"客户端列表",
   "nuxt_create":"新建客户端",
   "nuxt_edit":"客户端编辑",
+  "nuxt_settings":"客户端配置",
   "nuxt_create_success":"客户端创建成功",
   "nuxt_update_success":"客户端更新成功",
   "catelog": "文章分类",

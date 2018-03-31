@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\NuxtRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Nuxt as NuxtResource;
+use Illuminate\Support\Facades\Log;
 
 class NuxtController extends Controller
 {
@@ -21,7 +22,14 @@ class NuxtController extends Controller
 
     public function index(Request $request)
     {
-        return NuxtResource::collection($this->repository->paginate($request->limit ?? 5));
+
+        if($request->has('limit') && $request->limit == 'all') {
+            $data = $this->repository->all();
+        }else{
+            $data = $this->repository->paginate($request->limit ?? 10);
+        }
+
+        return NuxtResource::collection($data);
     }
 
     public function count()
@@ -33,10 +41,12 @@ class NuxtController extends Controller
     public function store(Request $request)
     {
         try {
-            $nuxt = $this->repository->create([
-                'name'   => $request->name,
-                'prefix' => $request->prefix,
-            ]);
+            $nuxt = $this->repository->create($request->nuxt);
+
+            $nuxt->banners()->create($request->banner);
+
+            $nuxt->posts()->catelogs($request->catelogs);
+
             return response()->json($nuxt, 201);
         } catch (\Exception $e) {
             $errorMessage = 'create nuxt failed ' . $e->getMessage();
@@ -76,5 +86,11 @@ class NuxtController extends Controller
             'message' => 'Nuxt deleted.',
             'deleted' => $deleted,
         ]);
+    }
+
+    public function settings($id)
+    {
+        $nuxt = $this->repository->with(['banners','catelogs'])->find($id);
+        return response()->json($nuxt);
     }
 }

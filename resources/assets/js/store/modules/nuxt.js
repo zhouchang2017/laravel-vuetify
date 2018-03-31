@@ -42,9 +42,9 @@ export const actions = {
       }, {root: true})
     }
   },
-  async store ({dispatch}, {formDate}) {
+  async store ({dispatch}, {formData}) {
     try {
-      let {data} = await axios.post(api.nuxt.store(), formDate)
+      let {data} = await axios.post(api.nuxt.store(), formData)
       return data
     } catch (err) {
       console.log(err)

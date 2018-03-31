@@ -40,6 +40,11 @@ export default ({authGuard, guestGuard}) => [
       component: ()=>import('~/pages/nuxt/edit')
     },
     {
+      path: '/nuxt/settings',
+      name: 'nuxt.settings',
+      component: ()=>import('~/pages/nuxt/settings')
+    },
+    {
       path: '/catelog',
       name: 'catelog.index',
       component: ()=>import('~/pages/catelog/index')
