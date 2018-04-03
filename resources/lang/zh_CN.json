@@ -57,5 +57,13 @@
   "catelog_create":"新建文章分类",
   "catelog_edit":"文章分类编辑",
   "catelog_create_success":"文章分类创建成功",
-  "catelog_update_success":"文章分类更新成功"
+  "catelog_update_success":"文章分类更新成功",
+  "banner": "Banner",
+  "banner_name": "Banner名称",
+  "banner_name_required": "Banner名称是必填项",
+  "banner_list":"Banner列表",
+  "banner_create":"新建Banner",
+  "banner_edit":"Banner编辑",
+  "banner_create_success":"Banner创建成功",
+  "banner_update_success":"Banner更新成功"
 }

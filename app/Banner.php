@@ -21,14 +21,14 @@ class Banner extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'url',
+        'type',
+        'link',
         'avatar',
         'title',
         'description',
         'post_id',
         'start_at',
         'sort',
-        'link',
         'end_at'
     ];
 

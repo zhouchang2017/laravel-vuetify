@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use App\Repositories\NuxtRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Nuxt as NuxtResource;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\BannerRepository;
 
 class NuxtController extends Controller
 {
     protected $repository;
-
     /**
      * NuxtController constructor.
      * @param $repository
@@ -41,12 +42,14 @@ class NuxtController extends Controller
     public function store(Request $request)
     {
         try {
-            $nuxt = $this->repository->create($request->nuxt);
-
-            $nuxt->banners()->create($request->banner);
-
-            $nuxt->posts()->catelogs($request->catelogs);
-
+//            dd($request->input('banner'));
+//            $nuxt = $this->repository->create($request->nuxt);
+            $banner = Banner::create($request->input('banner'));
+            dump($banner);
+//            $nuxt->banners()->sync([$banner->id]);
+//            $nuxt->catelogs()->sync($request->catelogs);
+//        dd($banner);
+$nuxt = [];
             return response()->json($nuxt, 201);
         } catch (\Exception $e) {
             $errorMessage = 'create nuxt failed ' . $e->getMessage();

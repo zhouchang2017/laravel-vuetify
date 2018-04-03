@@ -82,11 +82,11 @@
                             chips
                             :items="posts"
                             :search-input.sync="search"
-                            v-model="formData.banner.postId"
+                            v-model="formData.banner.post_id"
                     ></v-select>
 
                     <v-text-field
-                            :disabled="!!formData.banner.postId"
+                            :disabled="!!formData.banner.post_id"
                             label="链接地址"
                             v-model="formData.banner.link"
                     ></v-text-field>
@@ -171,7 +171,7 @@
             avatar: '',
             type: 'main',
             link: '',
-            postId: null,
+            post_id: null,
             sort:0
           },
           catelogs: []

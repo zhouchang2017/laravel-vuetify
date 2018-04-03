@@ -60,6 +60,21 @@ export default ({authGuard, guestGuard}) => [
       component: ()=>import('~/pages/catelog/edit')
     },
     {
+      path: '/banner',
+      name: 'banner.index',
+      component: ()=>import('~/pages/banner/index')
+    },
+    {
+      path: '/banner/create',
+      name: 'banner.create',
+      component: ()=>import('~/pages/banner/create')
+    },
+    {
+      path: '/banner/:id/edit',
+      name: 'banner.edit',
+      component: ()=>import('~/pages/banner/edit')
+    },
+    {
       path: '/settings',
       component: ()=>import('~/pages/settings/index.vue'),
       children: [

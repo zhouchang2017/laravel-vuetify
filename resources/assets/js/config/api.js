@@ -8,6 +8,14 @@ const api = {
     update: id => `catelog/${id}`,
     delete: id => `catelog/${id}`
   },
+  banner: {
+    index: () => 'banners',
+    show: id => `banners/${id}`,
+    edit: id => `banners/${id}/edit`,
+    store: () => 'banners',
+    update: id => `banners/${id}`,
+    delete: id => `banners/${id}`
+  },
   nuxt: {
     index: () => 'nuxt',
     count: () => 'nuxt/count',
