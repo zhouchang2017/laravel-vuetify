@@ -143,6 +143,12 @@
     components: {
       UploadButton,
     },
+    props: {
+      editData: {
+        type: Object,
+        default: null
+      },
+    },
     data () {
       return {
         bannerAvatarIsUrl: true,
@@ -199,16 +205,29 @@
       async submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          let res = await this.$store.dispatch('banner/store', this.banner)
-          this.$store.dispatch('message/responseMessage', {
-            text: this.$t('banner_create_success')
-          })
-          this.$router.replace({name:'nuxt.index'})
+          if(this.editData){
+            let {id,...props} = this.banner
+            let res = await this.$store.dispatch('banner/update', {id,props})
+            this.$store.dispatch('message/responseMessage', {
+              text: this.$t('banner_update_success')
+            })
+            this.$router.replace({name:'banner.index'})
+          }else{
+            let res = await this.$store.dispatch('banner/store', this.banner)
+            this.$store.dispatch('message/responseMessage', {
+              text: this.$t('banner_create_success')
+            })
+            this.$router.replace({name:'banner.index'})
+          }
+
         }
       }
     },
     async created () {
       this.posts = await this.fetchPosts({})
+      if(this.editData){
+        this.$set(this,'banner',this.editData)
+      }
     }
   }
 </script>

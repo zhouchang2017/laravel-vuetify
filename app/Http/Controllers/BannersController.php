@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Banner;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,7 +12,7 @@ use App\Http\Requests\BannerCreateRequest;
 use App\Http\Requests\BannerUpdateRequest;
 use App\Repositories\BannerRepository;
 use App\Validators\BannerValidator;
-
+use App\Http\Resources\Banner as BannerResource;
 /**
  * Class BannersController.
  *
@@ -41,24 +42,16 @@ class BannersController extends Controller
         $this->validator  = $validator;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $banners = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $banners,
-            ]);
+        $limit = $request->limit ?? 10;
+        if($request->has('limit') && $request->limit == -1){
+            $limit  = null;
         }
+        $data = $this->repository->paginate($limit);
 
-        return view('banners.index', compact('banners'));
+        return BannerResource::collection($data);
     }
 
     /**
@@ -101,25 +94,11 @@ class BannersController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $banner = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $banner,
-            ]);
-        }
-
-        return view('banners.show', compact('banner'));
+        return new BannerResource($banner);
     }
 
     /**
@@ -158,13 +137,8 @@ class BannersController extends Controller
                 'message' => 'Banner updated.',
                 'data'    => $banner->toArray(),
             ];
+            return response()->json($response);
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {

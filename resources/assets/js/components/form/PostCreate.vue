@@ -17,34 +17,20 @@
                         ref="fileInput"
                         @getPath="getPath"
                 />
-
                 <v-select
-                        label="服务器"
-                        :items="nuxts.data"
+                        clearable
+                        label="客户端"
                         item-text="name"
                         item-value="id"
-                        v-model="selectedNuxts"
-                        multiple
-                        max-height="400"
-                        hint="选择需要展现的服务器"
-                        persistent-hint
-                        :rules="selectedNuxtsRules"
-                        chips
-                        required
+                        autocomplete
                         :loading="nuxtBusy"
-                >
-                    <template slot="selection" slot-scope="data">
-                        <v-chip
-                                close
-                                @input="nuxtSelect({parent:data.parent,item:data.item})"
-                                :selected="data.selected"
-                                class="chip--select-multi"
-                                :key="JSON.stringify(data.item)"
-                        >
-                            {{ data.item.name }}
-                        </v-chip>
-                    </template>
-                </v-select>
+                        cache-items
+                        chips
+                        :items="nuxts.data"
+                        :search-input.sync="search"
+                        v-model="selectedNuxts"
+                ></v-select>
+
 
                 <v-select
                         label="文章类型"
@@ -113,7 +99,7 @@
   import Upload from '~/components/upload/Upload'
 
   export default {
-    name: 'post-edit',
+    name: 'post-create',
     components: {
       UploadButton, Upload, VueEditor
     },
@@ -122,6 +108,7 @@
         uploadProgress: 0,
         uploadProgressShow: false,
         query: false,
+        search: null,
         toggle_multiple: [],
         nuxtBusy: false,
         valid: true,
@@ -174,11 +161,23 @@
         resetUploader()
 
       },
+      querySelections (val) {
+        this.nuxtBusy = true
+        // Simulated ajax query
+        setTimeout(async () => {
+          let queryBuild = {
+            search: `name:${val}`,
+            searchFields: 'name:like'
+          }
+          this.nuxts = await this.fetchNuxts(queryBuild)
+          this.nuxtBusy = false
+        }, 500)
+      },
       fetchCatelogs () {
         return this.$store.dispatch('catelog/index')
       },
-      fetchNuxts () {
-        return this.$store.dispatch('nuxt/index')
+      fetchNuxts (queryBuild) {
+        return this.$store.dispatch('nuxt/index', queryBuild)
       },
       nuxtSelect ({parent, item}) {
         parent.selectItem(item)
@@ -190,8 +189,8 @@
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
           await this.$store.dispatch('post/store', {formDate: this.formDate})
-          this.$store.dispatch('message/responseMessage',{
-            text:this.$t('post_create_success')
+          this.$store.dispatch('message/responseMessage', {
+            text: this.$t('post_create_success')
           })
           this.$router.replace({name: 'post.index'})
         }
@@ -218,11 +217,14 @@
     watch: {
       name () {
         this.errorMessages = []
+      },
+      search (val) {
+        val && this.querySelections(val)
       }
     },
     async created () {
       this.catelogs = await this.fetchCatelogs()
-      this.nuxts = await this.fetchNuxts()
+      // this.nuxts = await this.fetchNuxts()
     }
   }
 </script>

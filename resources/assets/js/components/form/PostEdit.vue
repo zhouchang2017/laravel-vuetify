@@ -198,7 +198,10 @@
         return this.$store.dispatch('catelog/index')
       },
       fetchNuxts () {
-        return this.$store.dispatch('nuxt/index')
+        let queryBuild = {
+          limit:100
+        }
+        return this.$store.dispatch('nuxt/index',queryBuild)
       },
       nuxtSelect ({parent, item}) {
         parent.selectItem(item)
@@ -257,6 +260,7 @@
     },
     async created () {
       this.catelogs = await this.fetchCatelogs()
+
       this.nuxts = await this.fetchNuxts()
       this.initEdit(this.editDate)
     }

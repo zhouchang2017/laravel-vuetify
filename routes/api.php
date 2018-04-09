@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::apiResource('banners','BannersController');
+
 Route::get('nuxt/{id}/settings','NuxtController@settings');
 Route::resource('comment','CommentsController');
 Route::group(['middleware' => ['auth:api','refresh']], function () {
@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth:api','refresh']], function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::apiResource('banners','BannersController');
 
     Route::get('post/count','PostController@count');
     Route::resource('post','PostController');

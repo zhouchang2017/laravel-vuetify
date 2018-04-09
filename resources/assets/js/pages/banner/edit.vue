@@ -4,7 +4,7 @@
             <h3 class="headline mb-0">{{ name }}</h3>
         </v-card-title>
         <v-divider></v-divider>
-
+        <banner-create :editData="body"/>
     </v-card>
 </template>
 
@@ -19,6 +19,9 @@
         valid: true
       }
     },
+    components: {
+      'banner-create':()=>import('~/components/form/BannerCreate')
+    },
     methods: {
       async submit () {
         if (this.$refs.form.validate()) {
@@ -32,7 +35,7 @@
       }
     },
     async created () {
-      this.body = await this.$store.dispatch('banner/edit', {id: this.$route.params.id})
+      this.body = await this.$store.dispatch('banner/show', {id: this.$route.params.id})
       this.loaded = true
     }
   }

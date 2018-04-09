@@ -37,4 +37,9 @@ class Banner extends Model implements Transformable
         return $this->belongsToMany(Nuxt::class,'nuxt_banner');
     }
 
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
 }

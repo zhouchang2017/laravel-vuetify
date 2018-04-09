@@ -79,6 +79,14 @@
               {title: this.$t('catelog_list'),route: {name: 'catelog.index'}},
               {title: this.$t('catelog_create'),route: {name: 'catelog.create'}},
             ]
+          },
+          {
+            action: 'toc',
+            title: this.$t('banner'),
+            items: [
+              {title: this.$t('banner_list'),route: {name: 'banner.index'}},
+              {title: this.$t('banner_create'),route: {name: 'banner.create'}},
+            ]
           }
         ],
         itemss: [

@@ -16,6 +16,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+    /*
+     * This name is client controller
+     * */
+    protected $clientNamespace = 'App\Http\Controllers\Api';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -39,6 +44,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapClientRoutes();
         //
     }
 
@@ -69,5 +75,14 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+
+    protected function mapClientRoutes()
+    {
+        Route::prefix('api/v1')
+            ->middleware('api')
+            ->namespace($this->clientNamespace)
+            ->group(base_path('routes/client.php'));
     }
 }

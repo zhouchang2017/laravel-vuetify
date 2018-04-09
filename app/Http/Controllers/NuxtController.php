@@ -42,14 +42,10 @@ class NuxtController extends Controller
     public function store(Request $request)
     {
         try {
-//            dd($request->input('banner'));
-//            $nuxt = $this->repository->create($request->nuxt);
-            $banner = Banner::create($request->input('banner'));
-            dump($banner);
-//            $nuxt->banners()->sync([$banner->id]);
-//            $nuxt->catelogs()->sync($request->catelogs);
-//        dd($banner);
-$nuxt = [];
+            $nuxt = $this->repository->create($request->nuxt);
+            $nuxt->banners()->sync($request->input('banner.id'));
+            $nuxt->catelogs()->sync($request->catelogs);
+
             return response()->json($nuxt, 201);
         } catch (\Exception $e) {
             $errorMessage = 'create nuxt failed ' . $e->getMessage();

@@ -61,13 +61,28 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->repository->update($request->all(), $id);
-
-        $response = [
-            'message' => 'Post updated.'
+        $postData = [
+            'title'         => $request->title,
+            'avatar'        => $request->avatar,
+            'body'          => $request->body,
+            'user_id'       => Auth::id(),
+            'originate'     => $request->input('originate', ''),
+            'fake_read_num' => $request->input('fake_read_num', 0),
+            'hidden'        => $request->input('hidden', 0),
+            'is_hot'        => $request->input('is_hot', 0),
         ];
+        $post = $this->repository->update($postData, $id);
 
-        return response()->json($response,201);
+
+        try {
+            $post->catelogs()->sync($request->catelogs);
+            $post->nuxts()->sync($request->nuxts);
+            return response()->json($post, 200);
+        } catch (\Exception $e) {
+            $errorMessage = 'update post failed ' . $e->getMessage();
+            Log::info($errorMessage);
+            return false;
+        }
 
     }
 

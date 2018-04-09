@@ -16,22 +16,9 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async index ({commit, dispatch, getters}) {
+  async index ({commit, dispatch, getters},queryBuild) {
     try {
-      let {data} = await axios.get(api.catelog.index())
-      return data
-    } catch (err) {
-      console.log(err)
-      dispatch('message/responseMessage', {
-        type: 'error',
-        modal: true,
-        text: JSON.stringify(err.response.data)
-      }, {root: true})
-    }
-  },
-  async count ({dispatch}) {
-    try {
-      let {data} = await axios.get(api.catelog.count())
+      let {data} = await axios.get(api.banner.index(), {params: queryBuild})
       return data
     } catch (err) {
       console.log(err)
@@ -56,9 +43,9 @@ export const actions = {
       return false
     }
   },
-  async edit ({dispatch}, {id}) {
+  async show ({dispatch}, {id}) {
     try {
-      let {data} = await axios.get(api.catelog.edit(id))
+      let {data} = await axios.get(api.banner.show(id))
       return data
     } catch (err) {
       console.log(err)
@@ -71,7 +58,7 @@ export const actions = {
   },
   async update ({dispatch}, {id, props}) {
     try {
-      let {data} = await axios.patch(api.catelog.update(id), {...props})
+      let {data} = await axios.patch(api.banner.update(id), {...props})
       return data
     } catch (err) {
       console.log(err)

@@ -36,68 +36,20 @@
                     </div>
                 </v-card-title>
                 <v-card-text>
-                    <v-radio-group row label="banner位置" v-model="formData.banner.type"
-                                   :mandatory="false">
-                        <v-radio label="首页头部巨幕海报" value="main"></v-radio>
-                        <v-radio label="首页中部海报" value="mid"></v-radio>
-                    </v-radio-group>
-
-                    <v-text-field
-                            label="Banner标题"
-                            v-model="formData.banner.title"
-                            :rules="[()=>!!formData.banner.title || 'title is required!!']"
-                            :counter="32"
-                            required
-                    ></v-text-field>
-
-                    <v-radio-group row label="banner图片" v-model="bannerAvatarIsUrl"
-                                   :mandatory="false">
-                        <v-radio label="url地址" :value="true"></v-radio>
-                        <v-radio label="上传图片" :value="false"></v-radio>
-                    </v-radio-group>
-
-                    <v-text-field
-                            v-show="bannerAvatarIsUrl"
-                            label="图片地址"
-                            v-model="formData.banner.avatar"
-                            required
-                    ></v-text-field>
-
-                    <upload-button
-                            v-show="!bannerAvatarIsUrl"
-                            class="mx-0"
-                            accept="image/*"
-                            ref="fileInput"
-                            @getPath="getPath"
-                    />
 
                     <v-select
                             clearable
-                            label="关联文章"
+                            label="关联Banner"
                             item-text="title"
                             item-value="id"
                             autocomplete
                             :loading="loading"
                             cache-items
                             chips
-                            :items="posts"
+                            :items="banners"
                             :search-input.sync="search"
-                            v-model="formData.banner.post_id"
+                            v-model="formData.banner.id"
                     ></v-select>
-
-                    <v-text-field
-                            :disabled="!!formData.banner.post_id"
-                            label="链接地址"
-                            v-model="formData.banner.link"
-                    ></v-text-field>
-
-                    <v-text-field
-                            label="排序权重"
-                            v-model="formData.banner.sort"
-                            required
-                            :rules="[()=>/^-?\d+$/.test(formData.banner.sort) || '必须为数字']"
-                    ></v-text-field>
-
 
                 </v-card-text>
                 <v-divider class="mt-2"></v-divider>
@@ -160,19 +112,14 @@
         search: null,
         loading: false,
         catelogs: {},
-        posts: [],
+        banners: [],
         formData: {
           nuxt: {
             name: '',
             prefix: ''
           },
           banner: {
-            title: '',
-            avatar: '',
-            type: 'main',
-            link: '',
-            post_id: null,
-            sort:0
+            id:null
           },
           catelogs: []
         },
@@ -194,12 +141,12 @@
             search: `title:${val}`,
             searchFields: 'title:like'
           }
-          this.posts = await this.fetchPosts(queryBuild)
+          this.posts = await this.fetchBanners(queryBuild)
           this.loading = false
         }, 500)
       },
-      async fetchPosts(queryBuild){
-        let {data} = await this.$store.dispatch('post/index', queryBuild)
+      async fetchBanners(queryBuild){
+        let {data} = await this.$store.dispatch('banner/index', queryBuild)
         return data
       },
       getPath (src) {
@@ -230,7 +177,7 @@
     },
     async created () {
       await this.fetchCatelog()
-      this.posts = await this.fetchPosts({})
+      this.banners = await this.fetchBanners({})
     }
 
   }
