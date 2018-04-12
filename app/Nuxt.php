@@ -24,7 +24,7 @@ class Nuxt extends Model implements Transformable
 
     public function posts()
     {
-        return $this->belongsToMany(Nuxt::class,'nuxt_post','nuxt_id','post_id');
+        return $this->belongsToMany(Post::class,'nuxt_post','nuxt_id','post_id');
     }
 
 

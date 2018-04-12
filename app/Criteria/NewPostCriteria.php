@@ -6,13 +6,12 @@ use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class HotPostCriteria.
+ * Class NewPostCriteria.
  *
  * @package namespace App\Criteria;
  */
-class HotPostCriteria implements CriteriaInterface
+class NewPostCriteria implements CriteriaInterface
 {
-
     /**
      * @var int
      */
@@ -23,22 +22,14 @@ class HotPostCriteria implements CriteriaInterface
     protected $take;
 
     /**
-     * @var string
-     */
-    protected $orderBy;
-
-
-    /**
-     * HotPostCriteria constructor.
-     * @param int $take
+     * NewPostCriteria constructor.
      * @param int $skip
-     * @param string $orderBy
+     * @param int $take
      */
-    public function __construct(int $take, int $skip = 0, string $orderBy = 'read_num + fake_read_num')
+    public function __construct(int $take,int $skip = 0)
     {
-        $this->take = $take;
         $this->skip = $skip;
-        $this->orderBy = $orderBy;
+        $this->take = $take;
     }
 
     /**
@@ -52,12 +43,13 @@ class HotPostCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $model = $model->with([ 'posts' => function ($query) {
-            $query->where(
+            $query->with(['catelogs'=>function($query){
+                $query->select('id','name')->first();
+            }])->where(
                 [
-                    [ 'is_hot', 1],
                     [ 'hidden', 0 ],
                 ]
-            )->orderByRaw('read_num + fake_read_num', 'desc')->skip($this->skip)->take($this->take);
+            )->orderByRaw('created_at', 'desc')->skip($this->skip)->take($this->take);
         } ]);
         return $model;
     }
