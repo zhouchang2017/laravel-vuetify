@@ -59,6 +59,23 @@ class PostController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return bool|\Illuminate\Http\JsonResponse
+     */
+    public function updateField(Request $request, $id)
+    {
+        try {
+            $post = $this->repository->update($request->all(), $id);
+            return response()->json($post, 200);
+        } catch (\Exception $e) {
+            $errorMessage = 'update post failed ' . $e->getMessage();
+            Log::info($errorMessage);
+            return false;
+        }
+    }
+
     public function update(Request $request, $id)
     {
         $postData = [

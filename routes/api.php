@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth:api','refresh']], function () {
 
     Route::get('post/count','PostController@count');
     Route::resource('post','PostController');
+    Route::post('post/{id}/update','PostController@updateField');
 
     Route::get('nuxt/count','NuxtController@count');
     Route::resource('nuxt','NuxtController');

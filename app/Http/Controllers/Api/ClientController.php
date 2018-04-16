@@ -7,6 +7,7 @@ use App\Criteria\ByClientCriteria;
 use App\Criteria\ClientBannersCriteria;
 use App\Criteria\ClientCatelogsCriteria;
 use App\Criteria\HotPostCriteria;
+use App\Criteria\HotPostWithCatelogsCriteria;
 use App\Criteria\NewPostCriteria;
 use App\Http\Resources\ClientPost;
 use App\Repositories\NuxtRepository;
@@ -58,9 +59,11 @@ class ClientController extends Controller
     {
         $data = [];
 
-        $data['hot'] = ClientPost::collection($this->getHotPost($request));
+        $data['hot'] = ClientPost::collection($this->getHotPost($request->all()));
 
-        $data['new'] = ClientPost::collection($this->getNewPost($request));
+        $data['new'] = ClientPost::collection($this->getNewPost($request->all()));
+
+        $data['hotList'] = ClientPost::collection($this->getHotCatelogPost(['take'=>6,'skip'=>4]));
 
         $recommend = $this->repository
             ->pushCriteria(new HotPostCriteria(1, 4))
@@ -95,31 +98,45 @@ class ClientController extends Controller
             ->paginate($request->limit ?? 5));
     }
 
+
     /**
-     * @param Request $request
-     * hot_num
+     * @param $data
      * @return mixed
      */
-    private function getHotPost(Request $request)
+    private function getHotPost($data)
     {
         $hot = $this->repository
-            ->pushCriteria(new HotPostCriteria($request->hot_num ?? 3))
+            ->pushCriteria(new HotPostCriteria($data->hot_num ?? 3))
             ->findByField('prefix', $this->getPrefix())
             ->first()->posts;
         return $hot;
     }
 
+
     /**
-     * @param Request $request
-     * new_num
+     * @param array $data
      * @return mixed
      */
-    private function getNewPost(Request $request)
+    private function getNewPost(array $data = [])
     {
         $new = $this->repository
-            ->pushCriteria(new NewPostCriteria($request->new_num ?? 6))
+            ->pushCriteria(new NewPostCriteria($data['new_num'] ?? 6,$data['skip'] ?? 0))
             ->findByField('prefix', $this->getPrefix())
             ->first()->posts;
         return $new;
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    private function getHotCatelogPost(array $data = [])
+    {
+        $hotCatelogPost = $this->repository
+            ->pushCriteria(new HotPostWithCatelogsCriteria($data['take'] ?? 3, $data['skip'] ?? 4))
+            ->findByField('prefix', $this->getPrefix())
+            ->first()->posts;
+        return $hotCatelogPost;
+
     }
 }

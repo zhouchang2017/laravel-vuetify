@@ -130,11 +130,11 @@
     },
     methods: {
       async isHot ({post_id, is_hot}) {
-        let data = await this.$store.dispatch('post/update', {post_id, props: {is_hot}})
+        let data = await this.$store.dispatch('post/updateField', {post_id, props: {is_hot}})
         console.log(data)
       },
       async isHidden ({post_id, hidden}) {
-        let data = await this.$store.dispatch('post/update', {post_id, props: {hidden}})
+        let data = await this.$store.dispatch('post/updateField', {post_id, props: {hidden}})
         console.log(data)
       },
       async fetch () {

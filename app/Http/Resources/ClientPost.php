@@ -20,9 +20,9 @@ class ClientPost extends Resource
         return [
             'id'    => $this->id,
             'title'  => $this->title,
-            'avatar'  => $this->avatar,
-            'body'  => $this->body,
-            'originate'  => $this->originate,
+            'avatar'  => $this->when(!!$this->avatar,$this->avatar),
+            'body'  => $this->when(!!$this->body,$this->body),
+            'originate'  => $this->when(!!$this->originate,$this->originate),
             'read_num'  => $this->read_num + $this->fake_read_num,
             'hidden'  => $this->hidden,
             'is_hot'  => $this->is_hot,

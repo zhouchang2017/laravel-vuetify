@@ -42,7 +42,8 @@ const api = {
     edit: id => `post/${id}/edit`,
     store: () => 'post',
     update: id => `post/${id}`,
-    delete: id => `post/${id}`
+    delete: id => `post/${id}`,
+    updateField: id => `post/${id}/update`
   }
 }
 
