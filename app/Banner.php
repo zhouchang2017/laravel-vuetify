@@ -16,6 +16,14 @@ class Banner extends Model implements Transformable
     use TransformableTrait;
 
     /**
+     * 要触发的所有关联关系。
+     *
+     * @var array
+     */
+    protected $touches = ['nuxts'];
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

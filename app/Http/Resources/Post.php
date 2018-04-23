@@ -6,6 +6,14 @@ use Illuminate\Http\Resources\Json\Resource;
 
 class Post extends Resource
 {
+    protected $isList;
+
+    public function __construct($resource,bool $isList = true)
+    {
+        parent::__construct($resource);
+        $this->isList = $isList;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -19,7 +27,7 @@ class Post extends Resource
             'id'    => $this->id,
             'title'  => $this->title,
             'avatar'  => $this->avatar,
-            'body'  => $this->body,
+            'body'  => $this->isList ? $this->desc : $this->body,
             'originate'  => $this->originate,
             'read_num'  => $this->read_num,
             'fake_read_num'  => $this->fake_read_num,
@@ -30,4 +38,5 @@ class Post extends Resource
             'catelogs' => Catelog::collection($this->whenLoaded('catelogs')),
         ];
     }
+
 }

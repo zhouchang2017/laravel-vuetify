@@ -9,6 +9,7 @@ use App\Criteria\ClientCatelogsCriteria;
 use App\Criteria\HotPostCriteria;
 use App\Criteria\HotPostWithCatelogsCriteria;
 use App\Criteria\NewPostCriteria;
+use App\Criteria\RandomPostCriteria;
 use App\Http\Resources\ClientPost;
 use App\Repositories\NuxtRepository;
 use App\Repositories\PostRepository;
@@ -70,6 +71,13 @@ class ClientController extends Controller
             ->findByField('prefix', $this->getPrefix())
             ->first()->posts->first();
         $data['recommend'] = new ClientPost($recommend);
+
+        $randomPost = $this->repository
+            ->pushCriteria(new RandomPostCriteria(10))
+            ->findByField('prefix', $this->getPrefix())
+            ->first()->posts;
+
+        $data['randomPost'] = ClientPost::collection($randomPost);
         return $data;
     }
 
@@ -137,6 +145,5 @@ class ClientController extends Controller
             ->findByField('prefix', $this->getPrefix())
             ->first()->posts;
         return $hotCatelogPost;
-
     }
 }

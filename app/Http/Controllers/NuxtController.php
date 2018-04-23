@@ -29,7 +29,6 @@ class NuxtController extends Controller
         }else{
             $data = $this->repository->paginate($request->limit ?? 10);
         }
-
         return NuxtResource::collection($data);
     }
 
@@ -56,7 +55,15 @@ class NuxtController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+
+        $nuxt = $this->repository->update($request->only(['name', 'prefix']), $id);
+
+        if($request->has('banners')){
+            $nuxt->banners()->sync($request->input('banners'));
+        }
+        if($request->has('catelogs')){
+            $nuxt->catelogs()->sync($request->input('catelogs'));
+        }
 
         $response = [
             'message' => 'Nuxt updated.',
@@ -74,7 +81,7 @@ class NuxtController extends Controller
 
     public function edit($id)
     {
-        $nuxt = $this->repository->find($id);
+        $nuxt = $this->repository->with(['catelogs','banners'])->find($id);
         return new NuxtResource($nuxt);
     }
 

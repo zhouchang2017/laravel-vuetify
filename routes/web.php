@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test/posts','TestPostController@index');
 Route::get('/test/banner',function (){
    \App\Banner::create([
        'title'=>'这里上banner标题',

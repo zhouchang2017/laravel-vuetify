@@ -46,10 +46,40 @@
                             :loading="loading"
                             cache-items
                             chips
+                            multiple
                             :items="banners"
                             :search-input.sync="search"
                             v-model="formData.banner.id"
-                    ></v-select>
+                    >
+                        <template slot="selection" slot-scope="data">
+                            <v-chip
+                                    close
+                                    @input="data.parent.selectItem(data.item)"
+                                    :selected="data.selected"
+                                    class="chip--select-multi"
+                                    :key="JSON.stringify(data.item)"
+                                    :color="data.item.type === 'main' ? 'primary' : 'secondary'"
+                                    text-color="white"
+                            >
+                                <v-avatar>
+                                    <img :src="data.item.avatar">
+                                </v-avatar>
+                                {{ data.item.title }}
+                            </v-chip>
+                        </template>
+                        <template slot="item" slot-scope="data">
+                            <v-list-tile-avatar tile>
+                                <img :src="data.item.avatar">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
+                                <!--<v-list-tile-sub-title v-html="data.item.type"></v-list-tile-sub-title>-->
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <v-list-tile-action-text>位置:{{ data.item.type }}</v-list-tile-action-text>
+                            </v-list-tile-action>
+                        </template>
+                    </v-select>
 
                 </v-card-text>
                 <v-divider class="mt-2"></v-divider>
