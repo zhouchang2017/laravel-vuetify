@@ -14,6 +14,7 @@
             >
                 <template slot="items" slot-scope="props">
                     <td class="text-xs-left">{{ props.item.id }}</td>
+                    <td class="text-xs-center"><img width="100px" :src="props.item.avatar"/></td>
                     <td class="text-xs-center">{{ props.item.name }}</td>
                     <td class="text-xs-center">{{ props.item.post_count }}</td>
                     <td class="text-xs-center">{{ props.item.updated_at }}</td>
@@ -65,6 +66,7 @@
         loading: false,
         headers: [
           {text: 'id', value: 'id', align: 'left'},
+          {text: 'Avatar', value: 'avatar', align: 'center',sortable: false},
           {text: 'Name', value: 'name', align: 'center'},
           {text: this.$t('post_count'), value: 'post_count', align: 'center'},
           {text: this.$t('updated_at'), value: 'updated_at', align: 'center'},

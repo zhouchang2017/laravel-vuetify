@@ -16,6 +16,7 @@ class CreateCatelogsTable extends Migration
         Schema::create('catelogs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('分类名称');
+            $table->string('avatar')->comment('图片')->nullable();
             $table->string('en_name')->nullable();
             $table->timestamps();
         });

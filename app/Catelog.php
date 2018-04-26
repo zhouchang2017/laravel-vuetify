@@ -29,7 +29,7 @@ class Catelog extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'name','en_name'
+        'name','en_name','avatar'
     ];
 
     public function posts()

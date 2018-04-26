@@ -17,21 +17,12 @@
                     :rows-per-page-items="[5,10,20,40]"
             >
                 <template slot="items" slot-scope="props">
-                    <td>
-                        <v-card class="mt-1 mb-1">
-                            <v-card-media
-                                    flat
-                                    tile
-                                    contain
-                                    class="white--text"
-                                    width="200px"
-                                    height="100px"
-                                    :src="props.item.avatar"
-                            >
-                            </v-card-media>
-                        </v-card>
+                    <td class="text-xs-center">
+                        <div style="display: flex;width:100px">
+                            <img style="width: 100%;height: 100%;object-fit: cover;" :src="props.item.avatar" alt="" />
+                        </div>
                     </td>
-                    <td class="text-xs-right">{{ props.item.title }}</td>
+                    <td class="text-xs-center">{{ props.item.title }}</td>
                     <td class="text-xs-right">{{ props.item.read_num }}</td>
                     <td class="text-xs-right">{{ props.item.fake_read_num }}</td>
                     <td class="text-xs-right">
@@ -105,12 +96,11 @@
         headers: [
           {
             text: 'Avatar',
-            align: 'left',
+            align: 'center',
             sortable: false,
             value: 'avatar',
-            width: '200px'
           },
-          {text: 'Title', value: 'title'},
+          {text: 'Title', value: 'title',align: 'center'},
           {text: 'Read_num', value: 'read_num'},
           {text: 'Fake_read_num', value: 'fake_read_num'},
           {text: 'Is_hot', value: 'is_hot'},
