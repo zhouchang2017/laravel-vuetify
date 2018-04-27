@@ -14,7 +14,14 @@
             >
                 <template slot="items" slot-scope="props">
                     <td class="text-xs-left">{{ props.item.id }}</td>
-                    <td class="text-xs-center"><img width="100px" :src="props.item.avatar"/></td>
+                    <td class="text-xs-center">
+                        <v-tooltip right color="grey lighten-3" :max-width="$vuetify.breakpoint.width - 300">
+                            <img slot="activator" class="table-img" :src="props.item.avatar" alt="" />
+                            <span>
+                                <img width="100%" :src="props.item.avatar" alt="" />
+                            </span>
+                        </v-tooltip>
+                    </td>
                     <td class="text-xs-center">{{ props.item.name }}</td>
                     <td class="text-xs-center">{{ props.item.post_count }}</td>
                     <td class="text-xs-center">{{ props.item.updated_at }}</td>

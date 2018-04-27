@@ -18,9 +18,12 @@
             >
                 <template slot="items" slot-scope="props">
                     <td class="text-xs-center">
-                        <div style="display: flex;width:100px">
-                            <img style="width: 100%;height: 100%;object-fit: cover;" :src="props.item.avatar" alt="" />
-                        </div>
+                        <v-tooltip right color="grey lighten-3" :max-width="$vuetify.breakpoint.width - 300">
+                            <img slot="activator" class="table-img" :src="props.item.avatar" alt="" />
+                            <span>
+                                <img width="100%" :src="props.item.avatar" alt="" />
+                            </span>
+                        </v-tooltip>
                     </td>
                     <td class="text-xs-center">{{ props.item.title }}</td>
                     <td class="text-xs-right">{{ props.item.read_num }}</td>

@@ -18,6 +18,14 @@
             >
                 <template slot="items" slot-scope="props">
                     <td class="text-xs-left">{{ props.item.id }}</td>
+                    <td class="text-xs-center">
+                        <v-tooltip right color="grey lighten-3" :max-width="$vuetify.breakpoint.width - 300">
+                            <img slot="activator" class="table-img" :src="props.item.avatar" alt="" />
+                            <span>
+                                <img width="100%" :src="props.item.avatar" alt="" />
+                            </span>
+                        </v-tooltip>
+                    </td>
                     <td class="text-xs-center">{{ props.item.title }}</td>
                     <td class="text-xs-center">{{ props.item.sort }}</td>
                     <td class="text-xs-center">{{ props.item.start_at }}</td>
@@ -76,11 +84,12 @@
         },
         headers: [
           {text: 'id', value: 'id', align: 'left'},
-          {text: 'Title', value: 'title'},
-          {text: 'Sort', value: 'sort'},
-          {text: 'Start_at', value: 'start_at'},
-          {text: 'End_at', value: 'end_at'},
-          {text: this.$t('updated_at'), value: 'updated_at'},
+          {text: 'Avatar', value: 'avatar', align: 'center',sortable: false},
+          {text: 'Title', value: 'title',align: 'center'},
+          {text: 'Sort', value: 'sort',align: 'center'},
+          {text: 'Start_at', value: 'start_at',align: 'center'},
+          {text: 'End_at', value: 'end_at',align: 'center'},
+          {text: this.$t('updated_at'), value: 'updated_at',align: 'center'},
           {text: 'Actions', value: 'name', align: 'right', sortable: false}
         ]
       }
